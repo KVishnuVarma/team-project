@@ -1,0 +1,187 @@
+/* Global styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+  
+  .container {
+    display: flex;
+    height: 100vh;
+    background-color: #f8f9fa;
+  }
+  
+  /* Sidebar styles */
+  .sidebar {
+    width: 60px; /* Initial width */
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    transition: width 0.3s ease; /* Smooth transition */
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    overflow: hidden; /* Hide content when collapsed */
+  }
+  
+  .sidebar:hover {
+    width: 200px; /* Expand on hover */
+  }
+  
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* First sidebar item (Free Code with Image) */
+  .sidebar ul li:first-child {
+    display: flex;
+    align-items: center; /* Align image and text side by side */
+    padding: 10px 0; /* Adjust for better spacing */
+    justify-content: center; /* Center content */
+  }
+  
+  .sidebar ul li:first-child img.icon {
+    width: 30px; /* Adjust logo size */
+    height: 30px;
+    margin-right: 2px; 
+  }
+  
+  .sidebar ul li:first-child h2.label {
+    font-size: 16px; /* Adjust text size */
+    font-weight: bold;
+    margin: 0;
+    opacity: 1; /* Make sure Free Code is visible */
+    white-space: nowrap; /* Prevent text wrap */
+    transition: none; /* No opacity transition */
+  }
+  
+  /* Sidebar icons and labels */
+  .sidebar ul li {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  /* Always visible icons */
+  .sidebar ul li .icon {
+    width: 40px;
+    height: 40px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease;
+    /* Icons are always visible */
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .sidebar ul li .label {
+    color: white;
+    margin-left: 10px;
+    opacity: 0; /* Labels are hidden initially */
+    white-space: nowrap;
+    transition: opacity 0.3s ease;
+  }
+  
+  /* Hover effect for labels (icons stay visible) */
+  .sidebar:hover .label {
+    opacity: 1;
+  }
+  
+  /* Icon hover effect */
+  .sidebar li:hover .icon {
+    transform: scale(1.2); /* Slight hover effect */
+  }
+  
+  /* Content styles */
+  .content {
+    margin-left: 60px;
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    transition: margin-left 0.3s ease;
+  }
+  
+  .sidebar:hover ~ .content {
+    margin-left: 200px;
+  }
+  
+  .header-left {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3px;
+    margin-left: 50px; 
+  }
+  
+  .admin {
+    font-size: 24px;
+  }
+  
+  .header-left p {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    color: #555;
+  }
+  
+  /* Profile Picture */
+  .profile-pic {
+    width: 50px;
+    height: 50px;
+    background-color: #ccc;
+    border-radius: 50%;
+    margin-top: 10px;
+  }
+  
+  /* Upload box styles */
+  .upload-container {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .upload-box {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .upload-icon {
+    font-size: 60px;
+    color: #007bff;
+    margin-bottom: 15px;
+  }
+  
+  .upload-box p {
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .upload-box input[type="file"] {
+    margin: 10px 0;
+  }
+  
+  .upload-box button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .upload-box button:hover {
+    background-color: #0056b3;
+  }
+  
