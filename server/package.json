@@ -8,7 +8,7 @@
     "start": "nodemon js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Vishnu Varma",
   "license": "ISC",
   "description": "",
   "dependencies": {
