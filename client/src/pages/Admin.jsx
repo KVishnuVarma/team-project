@@ -107,7 +107,7 @@ const Admin = () => {
         ) : selectedSection === "fourthYears" ? (
           <FourthYears />
         ) : selectedSection === "logout" ? (
-          <Logout /> // Make sure to import `Logout` if used
+          <Logout /> 
         ) : (
           <div className="upload-container">
             <div className="upload-box">

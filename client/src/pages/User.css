@@ -1,0 +1,71 @@
+/* src/pages/User.css */
+
+/* Global styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+    background-color: #f8f9fa;
+}
+
+/* Content area for the user page */
+.user-page {
+    display: flex; /* Use flexbox for layout */
+}
+
+.user-content {
+    flex: 1; /* Take remaining space for content */
+    padding: 20px; /* Add padding to the content */
+    background-color: #ffffff;
+}
+
+/* Header styling */
+.header-left {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.header-left h3 {
+    font-size: 24px;
+    margin: 0;
+}
+
+.header-left p {
+    font-size: 14px;
+    color: #555;
+}
+
+/* Table styles */
+table {
+    width: 100%;
+    margin-right: 10%;
+    border-collapse: collapse;
+    margin-top: 20px; /* Spacing from input */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+/* Search input styles */
+input[type="search"] {
+    padding: 10px;
+    margin-top: 10px;
+    width: calc(100% - 20px); 
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}

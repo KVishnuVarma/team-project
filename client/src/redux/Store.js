@@ -1,20 +1,24 @@
 import { configureStore } from '@reduxjs/toolkit';
-import AuthSlice from './AuthSlice';
-import storage from 'redux-persist/lib/storage';
-import { persistReducer, persistStore } from 'redux-persist';  // Remove the duplicate 'persistReducer'
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
+import { combineReducers } from 'redux';
+import { AuthReducer } from './AuthSlice';  // Assuming your AuthSlice is here
 
 const persistConfig = {
-    key: "root",
-    storage,
-    // whitelist: ['Auth']
+  key: 'root',
+  storage,
 };
 
-const Reducer = persistReducer(persistConfig, AuthSlice);
-
-export const store = configureStore({
-    reducer: {
-        Auth: Reducer
-    }
+const rootReducer = combineReducers({
+  Auth: AuthReducer, // Include other reducers if you have
 });
 
-export const persistor = persistStore(store);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+const store = configureStore({
+  reducer: persistedReducer,
+});
+
+const persistor = persistStore(store);
+
+export { store, persistor };
