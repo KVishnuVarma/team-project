@@ -1,96 +1,67 @@
-// src/pages/User.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { FaFileUpload } from "react-icons/fa";
+import { PiStudent } from "react-icons/pi";
+import { IoIosLogOut } from "react-icons/io";
+import { MdLeaderboard, MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
+import { Link, Outlet } from 'react-router-dom'; // Use Link for navigation and Outlet for nested routes
 import './User.css';
-import Navbar from '../User/NavBar'; // Ensure the import path is correct
 
-const User = ({ userName }) => {
-    const [userData, setUserData] = useState({
-        name: userName || ' ', // Default name if userName is not provided
-        problemsSolved: 10,
-        totalProblems: 50,
-        userProblems: []
-    });
-    const [selectedSection, setSelectedSection] = useState("home");
+const User = () => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
-    useEffect(() => {
-        const fetchUserProblems = () => {
-            setUserData((prevState) => ({
-                ...prevState,
-                userProblems: [
-                    { title: 'Problem 1', accuracy: '80%', difficulty: 'Medium', status: 'Solved' },
-                    { title: 'Problem 2', accuracy: '75%', difficulty: 'Easy', status: 'Pending' },
-                ]
-            }));
-        };
+  const toggleMode = () => {
+    setIsDarkMode((prevMode) => !prevMode);
+  };
 
-        fetchUserProblems();
-    }, []);
+  return (
+    <div className={`container ${isDarkMode ? "dark-mode" : "light-mode"}`}>
+      <div className="sidebar">
+        <ul>
+          <li>
+            <img src="/logo.png" className="icon" alt="Free Code Logo" />
+            <h2 className="label">Free Code</h2>
+          </li>
+          <li>
+            <Link to="/user/profile">
+              <PiStudent className='icon' />
+              <div className="label">Profile</div>
+            </Link>
+          </li>
+          <li>
+            <Link to="/user/test">
+              <FaFileUpload className='icon' />
+              <div className="label">Test</div>
+            </Link>
+          </li>
+          <li>
+            <Link to="/user/practice">
+              <PiStudent className='icon' />
+              <div className="label">Practice</div>
+            </Link>
+          </li>
+          <li>
+            <Link to="/user/leaderboard">
+              <MdLeaderboard className='icon' />
+              <div className="label">Leaderboard</div>
+            </Link>
+          </li>
+          <li onClick={toggleMode}>
+            {isDarkMode ? <MdOutlineLightMode className='icon' /> : <MdOutlineDarkMode className='icon' />}
+            <div className="label">{isDarkMode ? "Light Mode" : "Dark Mode"}</div>
+          </li>
+          <li>
+            <IoIosLogOut className='icon' />
+            <div className="label">Logout</div>
+          </li>
+        </ul>
+      </div>
 
-    useEffect(() => {
-        setUserData((prevState) => ({ ...prevState, name: userName }));
-    }, [userName]);
-
-    return (
-        <div className="container">
-            <div className="sidebar">
-                <ul>
-                    <li>
-                        <h2 className="label">Profile</h2>
-                    </li>
-                    <li>
-                        <h2 className="label">Practice</h2>
-                    </li>
-                    <li>
-                        <h2 className="label">Test</h2>
-                    </li>
-                    <li>
-                        <h2 className="label">Leaderboard</h2>
-                    </li>
-                    <li>
-                        <h2 className="label">Mode</h2>
-                    </li>
-                    <li>
-                        <h2 className="label">Logout</h2>
-                    </li>
-                </ul>
-            </div>
-            <div className="content">
-                <div className="header-left">
-                    <h3>Welcome, {userData.name}</h3>
-                    <p>Problems solved: {userData.problemsSolved} / {userData.totalProblems}</p>
-                </div>
-                {selectedSection === "home" ? (
-                    <div>
-                        <input type="search" placeholder="Search problems..." />
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Title</th>
-                                    <th>Accuracy</th>
-                                    <th>Difficulty</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {userData.userProblems.map((problem, index) => (
-                                    <tr key={index}>
-                                        <td>{problem.title}</td>
-                                        <td>{problem.accuracy}</td>
-                                        <td>{problem.difficulty}</td>
-                                        <td>{problem.status}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                ) : (
-                    <div>
-                        <h4>You selected: {selectedSection}</h4>
-                    </div>
-                )}
-            </div>
-        </div>
-    );
+      <div className="content">
+        {/* This Outlet will display the nested routes */}
+        <Outlet />
+      </div>
+    </div>
+  );
 };
 
 export default User;

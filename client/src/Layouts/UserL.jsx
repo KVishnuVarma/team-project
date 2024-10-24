@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { SetUser } from '../redux/AuthSlice'; // Import your action to set the user
-import { get } from '../services/Api'; // API service to make GET requests
+import { SetUser } from '../redux/AuthSlice';
+import { get } from '../services/Api';
 
 export default function UserL() {
   const user = useSelector((state) => state.Auth.user);
@@ -12,7 +12,7 @@ export default function UserL() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const request = await get('/api/auth/me'); // API route to get current user data
+        const request = await get('/api/auth/me');
         const response = request.data;
         if (response) {
           dispatch(SetUser(response.user));  // Store user data in Redux
@@ -28,5 +28,5 @@ export default function UserL() {
     }
   }, [user, dispatch, navigate]);
 
-  return <Outlet />;
+  return <Outlet />;  // Only use <Outlet /> here, no Router
 }

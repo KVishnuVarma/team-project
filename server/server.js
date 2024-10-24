@@ -8,6 +8,7 @@ import AdminRoutes from './models/AdminRoutes.js';
 import multer from 'multer';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import UserModel from './models/user.js';
 
 dotenv.config();
 
@@ -48,9 +49,9 @@ app.use('/api/auth', AuthRoutes);
 app.use('/api/admin', AdminRoutes);
 
 // Fetch users route
-app.get('/api/admin/getuser', async (req, res) => {
+app.get('/api/admin/getusers', async (req, res) => {
     try {
-        const users = await User.find(); // Ensure User model is imported
+        const users = await UserModel.find(); // Ensure User model is imported
         res.json(users);
     } catch (err) {
         res.status(500).json({ error: 'Failed to fetch users' });
