@@ -1,32 +1,67 @@
-import React, { useEffect } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { SetUser } from '../redux/AuthSlice';
-import { get } from '../services/Api';
+import React, { useState } from 'react';
+import { FaFileUpload } from "react-icons/fa";
+import { PiStudent } from "react-icons/pi";
+import { IoIosLogOut } from "react-icons/io";
+import { MdLeaderboard, MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
+import { Link, Outlet } from 'react-router-dom'; // Use Link for navigation and Outlet for nested routes
+import '../pages/User.css';
 
-export default function UserL() {
-  const user = useSelector((state) => state.Auth.user);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+const UserL = () => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const request = await get('/api/auth/me');
-        const response = request.data;
-        if (response) {
-          dispatch(SetUser(response.user));  // Store user data in Redux
-        }
-      } catch (error) {
-        console.log(error);
-        navigate('/login'); // Redirect to login if fetching user data fails
-      }
-    };
+  const toggleMode = () => {
+    setIsDarkMode((prevMode) => !prevMode);
+  };
 
-    if (!user) {
-      fetchUserData(); // Fetch user data if not available in Redux
-    }
-  }, [user, dispatch, navigate]);
+  return (
+    <div className={`container ${isDarkMode ? "dark-mode" : "light-mode"}`}>
+      <div className="sidebar">
+        <ul>
+          <li className="sidebar-item">
+            <img src="/logo.png" className="icon" alt="Free Code Logo" />
+            <h2 className="label">Free Code</h2>
+          </li>
+          <li className="sidebar-item">
+            <Link to="/user/profile">
+              <PiStudent className='icon' />
+              <div className="label">Profile</div>
+            </Link>
+          </li>
+          <li className="sidebar-item">
+            <Link to="/user/test">
+              <FaFileUpload className='icon' />
+              <div className="label">Test</div>
+            </Link>
+          </li>
+          <li className="sidebar-item">
+            <Link to="/user/practice">
+              <PiStudent className='icon' />
+              <div className="label">Practice</div>
+            </Link>
+          </li>
+          <li className="sidebar-item">
+            <Link to="/user/leaderboard">
+              <MdLeaderboard className='icon' />
+              <div className="label">Leaderboard</div>
+            </Link>
+          </li>
+          <li className="sidebar-item" onClick={toggleMode}>
+            {isDarkMode ? <MdOutlineLightMode className='icon' /> : <MdOutlineDarkMode className='icon' />}
+            <div className="label">{isDarkMode ? "Light Mode" : "Dark Mode"}</div>
+          </li>
+          <li className="sidebar-item">
+            <IoIosLogOut className='icon' />
+            <div className="label">Logout</div>
+          </li>
+        </ul>
+      </div>
 
-  return <Outlet />;  // Only use <Outlet /> here, no Router
-}
+      <div className="content">
+        {/* Outlet is where nested routes (like Leader, Profile, etc.) will be rendered */}
+        <Outlet />  {/* This will automatically render Dashboard for the default /user route */}
+      </div>
+    </div>
+  );
+};
+
+export default UserL;

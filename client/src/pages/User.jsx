@@ -17,39 +17,39 @@ const User = () => {
     <div className={`container ${isDarkMode ? "dark-mode" : "light-mode"}`}>
       <div className="sidebar">
         <ul>
-          <li>
+          <li className="sidebar-item">
             <img src="/logo.png" className="icon" alt="Free Code Logo" />
             <h2 className="label">Free Code</h2>
           </li>
-          <li>
+          <li className="sidebar-item">
             <Link to="/user/profile">
               <PiStudent className='icon' />
               <div className="label">Profile</div>
             </Link>
           </li>
-          <li>
+          <li className="sidebar-item">
             <Link to="/user/test">
               <FaFileUpload className='icon' />
               <div className="label">Test</div>
             </Link>
           </li>
-          <li>
+          <li className="sidebar-item">
             <Link to="/user/practice">
               <PiStudent className='icon' />
               <div className="label">Practice</div>
             </Link>
           </li>
-          <li>
+          <li className="sidebar-item">
             <Link to="/user/leaderboard">
               <MdLeaderboard className='icon' />
               <div className="label">Leaderboard</div>
             </Link>
           </li>
-          <li onClick={toggleMode}>
+          <li className="sidebar-item" onClick={toggleMode}>
             {isDarkMode ? <MdOutlineLightMode className='icon' /> : <MdOutlineDarkMode className='icon' />}
             <div className="label">{isDarkMode ? "Light Mode" : "Dark Mode"}</div>
           </li>
-          <li>
+          <li className="sidebar-item">
             <IoIosLogOut className='icon' />
             <div className="label">Logout</div>
           </li>
