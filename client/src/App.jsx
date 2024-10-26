@@ -13,6 +13,7 @@ import { Toaster } from "react-hot-toast";
 import AdminL from "./Layouts/AdminL";
 import UserL from "./Layouts/UserL";
 import ProfileUpdate from "./User/profileEdit";
+import EditorComponent from "./User/Compiler";
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
           <Route path="profile/edit/:id" element={<ProfileUpdate />} />
           <Route path="test" element={<Test />} />
           <Route path="practice" element={<Practice />} />
+          <Route path="practice/editor/:id" element={<EditorComponent />} />
           <Route path="leaderboard" element={<Leader />} />
         </Route>
 

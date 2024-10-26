@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import './Practice.css';
+import { Link } from "react-router-dom";
 
 const Practice = () => {
   const [questions, setQuestions] = useState([]);
@@ -51,7 +52,7 @@ const Practice = () => {
                   </ul>
                 </div> */}
               </div>
-              <button className="view-button">View</button>
+             <Link className="view-button" to = {`editor/${question._id}` } asChild> <button >View</button></Link>
             </div>
           )) 
         ) : (

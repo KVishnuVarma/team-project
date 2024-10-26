@@ -1,31 +1,40 @@
-import React from 'react';
-import './Leader.css'; 
+import React, { useState, useEffect } from 'react';
+import { IoMdContact } from 'react-icons/io';
+import './Leader.css';
 
 const Leader = () => {
+  const [data, setData] = useState([]);
+
+  const getUser = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/admin/getuser");
+      const data = await response.json();
+      console.log(data);
+      setData(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
   return (
-    <div className="leaderboard">
-      <h1>Leaderboard</h1>
-      <table className="leaderboard-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Points</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Unknown</td>
-            <td>800 Points</td>
-            <td><button className="explore-btn">Explore</button></td>
-          </tr>
-          <tr>
-            <td>Unknown</td>
-            <td>750 Points</td>
-            <td><button className="explore-btn">Explore</button></td>
-          </tr>
-        </tbody>
-      </table>
+    <div className="third-years-container">
+      <h3>Leader Board</h3>
+      <ul>
+        {data.map((student, index) => (
+          <li key={index}>
+            <span className="student-profile">
+              <IoMdContact className="contacticon" />
+              <span className="student-name">{student.name}</span>
+            </span>
+            <span className="student-points">{student.points} Points</span>
+            <button className="explore-btn">Explored</button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
