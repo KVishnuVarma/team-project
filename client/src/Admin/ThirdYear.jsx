@@ -12,6 +12,7 @@ const ThirdYears = () => {
     { name: "Unknown", points: 700 },
   ];
 
+
   return (
     <div className="third-years-container">
       <h3>Third Year Students</h3>
