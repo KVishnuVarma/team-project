@@ -4,7 +4,6 @@ import { get } from '../services/Api';
 const Dashboard = () => {
   const [submittedQuestions, setSubmittedQuestions] = useState([]);
 
-  // Fetch submitted questions on component mount
   useEffect(() => {
     const fetchSubmittedQuestions = async () => {
       try {

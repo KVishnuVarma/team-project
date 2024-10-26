@@ -1,4 +1,3 @@
-// models/Question.js
 import mongoose from 'mongoose';
 
 const questionSchema = new mongoose.Schema({
@@ -11,7 +10,7 @@ const questionSchema = new mongoose.Schema({
         required: true
     },
     testCases: {
-        type: [String], // Array of test case strings
+        type: [String], 
         required: true
     },
     createdAt: {

@@ -1,8 +1,7 @@
 const express = require('express');
-const Question = require('../models/Question'); // Import your question model
+const Question = require('../models/Question');
 const router = express.Router();
 
-// POST request to create a new question
 router.post('/api/questions', async (req, res) => {
   const { title, description, testCases } = req.body;
 

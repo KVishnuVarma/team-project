@@ -3,7 +3,7 @@ import { FaFileUpload } from "react-icons/fa";
 import { PiStudent } from "react-icons/pi";
 import { IoIosLogOut } from "react-icons/io";
 import { MdLeaderboard, MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
-import { Link, Outlet } from 'react-router-dom'; // Use Link for navigation and Outlet for nested routes
+import { Link, Outlet } from 'react-router-dom';
 import '../pages/User.css';
 
 const UserL = () => {
@@ -45,10 +45,10 @@ const UserL = () => {
               <div className="label">Leaderboard</div>
             </Link>
           </li>
-          <li className="sidebar-item" onClick={toggleMode}>
+          {/* <li className="sidebar-item" onClick={toggleMode}>
             {isDarkMode ? <MdOutlineLightMode className='icon' /> : <MdOutlineDarkMode className='icon' />}
             <div className="label">{isDarkMode ? "Light Mode" : "Dark Mode"}</div>
-          </li>
+          </li> */}
           <li className="sidebar-item">
             <IoIosLogOut className='icon' />
             <div className="label">Logout</div>
@@ -57,8 +57,7 @@ const UserL = () => {
       </div>
 
       <div className="content">
-        {/* Outlet is where nested routes (like Leader, Profile, etc.) will be rendered */}
-        <Outlet />  {/* This will automatically render Dashboard for the default /user route */}
+        <Outlet /> 
       </div>
     </div>
   );

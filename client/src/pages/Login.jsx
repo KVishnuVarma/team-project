@@ -15,18 +15,17 @@ export default function Login() {
     e.preventDefault();
     console.log(email, password);
     try {
-      const request = await post('/api/auth/login', { email, password });  // Now you can await
+      const request = await post('/api/auth/login', { email, password }); 
       const response = request.data;
 
       if (request.status === 200) {
-        // Check for user roles and redirect accordingly
         if (response.user.role === 'admin') {
-          navigate('/admin');  // Redirect to admin page
+          navigate('/admin'); 
         } else if (response.user.role === 'user') {
-          navigate('/user');  // Redirect to user page
+          navigate('/user'); 
         }
-        toast.success(response.message);  // Display success message
-        dispatch(SetUser(response.user));  // Store user data in Redux state
+        toast.success(response.message);  
+        dispatch(SetUser(response.user));  
       }
       console.log(response);
     } catch (error) {

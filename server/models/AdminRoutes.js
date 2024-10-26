@@ -5,7 +5,7 @@ import { isAdmin } from "../middleware/verfiyToken.js";
 
 const AdminRoutes=express.Router()
 
-    AdminRoutes.get('/getuser',isAdmin,Getuser)
+    AdminRoutes.get('/getuser',Getuser)
     AdminRoutes.post('/delet/:id',isAdmin,deletUser)
 
 

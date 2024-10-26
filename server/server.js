@@ -4,7 +4,7 @@ import cors from 'cors';
 import cookieparser from 'cookie-parser';
 import DbCon from './utlis/db.js';
 import AuthRoutes from './routes/Auth.js';
-import QuestionRoutes from './routes/Question.js'; // Import questions route
+import QuestionRoutes from './routes/Question.js'; 
 import AdminRoutes from './models/AdminRoutes.js';
 
 dotenv.config();
@@ -23,10 +23,9 @@ app.use(cors({
     origin: "http://localhost:5173"
 }));
 
-// Routes
 app.use('/api/auth', AuthRoutes);
-app.use('/api/questions', QuestionRoutes); // Use questions route for creating questions
-app.use('/api/admin', AdminRoutes); // Admin routes
+app.use('/api/questions', QuestionRoutes);
+app.use('/api/admin', AdminRoutes); 
 
 app.get('/', (req, res) => {
     res.send('API is running...');

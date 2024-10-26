@@ -1,17 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './thirdYear.css'; 
 import { IoMdContact } from "react-icons/io";
 
 const ThirdYears = () => {
-  const data = [
-    { name: "Unknown", points: 800 },
-    { name: "Unknown", points: 770 },
-    { name: "Unknown", points: 750 },
-    { name: "Unknown", points: 740 },
-    { name: "Unknown", points: 735 },
-    { name: "Unknown", points: 700 },
-  ];
+  const [data , setData ] = useState([])
 
+  const getUser =async ()=>{
+    const response = await fetch("http://localhost:5000/api/admin/getuser" , {
+
+    })
+    const data = await response.json()
+    console.log(data)
+    setData(data)
+  }
+  useEffect(()=>{
+      getUser()
+  },[])
 
   return (
     <div className="third-years-container">

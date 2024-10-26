@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import './Practice.css';
+
 const Practice = () => {
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);

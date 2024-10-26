@@ -45,10 +45,10 @@ const User = () => {
               <div className="label">Leaderboard</div>
             </Link>
           </li>
-          <li className="sidebar-item" onClick={toggleMode}>
+          {/* <li className="sidebar-item" onClick={toggleMode}>
             {isDarkMode ? <MdOutlineLightMode className='icon' /> : <MdOutlineDarkMode className='icon' />}
             <div className="label">{isDarkMode ? "Light Mode" : "Dark Mode"}</div>
-          </li>
+          </li> */}
           <li className="sidebar-item">
             <IoIosLogOut className='icon' />
             <div className="label">Logout</div>

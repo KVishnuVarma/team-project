@@ -8,40 +8,31 @@ import Profile from "./User/Profile";
 import Test from "./User/Test";
 import Practice from "./User/Practice";
 import Leader from "./User/Leader";
-import Dashboard from "./User/Dashboard"; // Import Dashboard component
+import Dashboard from "./User/Dashboard"; 
 import { Toaster } from "react-hot-toast";
 import AdminL from "./Layouts/AdminL";
-import UserL from "./Layouts/UserL"; // Import UserL layout
+import UserL from "./Layouts/UserL";
 
 export default function App() {
   return (
     <Router>
       <Toaster />
       <Routes>
-        {/* User Layout with nested routes */}
         <Route path="/user" element={<UserL />}>
-          {" "}
-          {/* User layout */}
-          <Route index element={<Dashboard />} />{" "}
-          {/* Default route is Dashboard */}
+          <Route index element={<Dashboard />} />
           <Route path="profile" element={<Profile />} />
           <Route path="test" element={<Test />} />
           <Route path="practice" element={<Practice />} />
           <Route path="leaderboard" element={<Leader />} />
         </Route>
 
-        {/* Admin Layout */}
         <Route path="/admin" element={<AdminL />}>
-          {" "}
-          {/* Admin layout */}
-          <Route index element={<Admin />} /> {/* Default admin route */}
+          <Route index element={<Admin />} />
         </Route>
 
-        {/* Login and Register Pages */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* Default Route */}
         <Route path="/" element={<Login />} />
       </Routes>
     </Router>

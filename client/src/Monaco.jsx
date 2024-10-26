@@ -3,7 +3,7 @@ import MonacoEditor from '@monaco-editor/react';
 
 function EditorComponent() {
   const [code, setCode] = useState('// Start coding here');
-  const [output, setOutput] = useState(''); // For displaying the output in the UI
+  const [output, setOutput] = useState('');
 
   function handleExecute() {
     fetch('http://127.0.0.1:8000/execute', {
@@ -11,14 +11,14 @@ function EditorComponent() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ code }), // Send the code as JSON in the request body
+      body: JSON.stringify({ code }),
     })
       .then(response => response.json())
       .then(data => {
-        setOutput(data.result); // Set the output to display in the UI
+        setOutput(data.result);
       })
       .catch(error => {
-        setOutput('Error executing code: ' + error.message); // Display error in case of failure
+        setOutput('Error executing code: ' + error.message); 
       });
   }
 
@@ -32,10 +32,9 @@ function EditorComponent() {
       />
       <button onClick={handleExecute}>Run Code</button>
 
-      {/* Output Section */}
       <div>
         <h3>Output:</h3>
-        <pre>{output}</pre> {/* Displaying output in the frontend */}
+        <pre>{output}</pre>
       </div>
     </div>
   );

@@ -63,17 +63,17 @@
 }
 
 .student-profile .contacticon {
-    font-size: 40px; /* Larger icons */
+    font-size: 40px; 
 }
 
 .student-name {
     font-weight: bold;
-    color: inherit; /* Inherit color for even rows */
+    color: inherit; 
     font-size: 18px;
 }
 
 .student-points {
-    color: black;
+    color:  #ffcc00;
     font-size: 16px;
     font-weight: 500;
 }
@@ -88,8 +88,8 @@
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
-    width: auto;  /* Preventing button from expanding too much */
-    max-width: 150px;  /* Limiting button size */
+    width: auto;  
+    max-width: 150px; 
 }
 
 .explore-btn:hover {
@@ -109,7 +109,7 @@
     transform: translateY(-2px);
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
     .third-years-container {
         padding: 15px;
@@ -125,8 +125,8 @@
     }
 
     .explore-btn {
-        width: 100%;  /* Full-width for smaller screens */
-        max-width: none;  /* Reset the max-width */
+        width: 100%; 
+        max-width: none;  
         margin-top: 10px;
     }
 }

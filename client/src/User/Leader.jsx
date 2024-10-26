@@ -1,5 +1,5 @@
 import React from 'react';
-import './Leader.css';  // Assuming you're using CSS for styling
+import './Leader.css'; 
 
 const Leader = () => {
   return (
@@ -24,7 +24,6 @@ const Leader = () => {
             <td>750 Points</td>
             <td><button className="explore-btn">Explore</button></td>
           </tr>
-          {/* Add more rows */}
         </tbody>
       </table>
     </div>

@@ -1,9 +1,8 @@
 import express from "express";
-import Question from "../models/Question.js"; // Import the Question model
+import Question from "../models/Question.js";
 
 const router = express.Router();
 
-// POST /api/questions - Add a new question
 router.post("/", async (req, res) => {
   const { title, description, testCases } = req.body;
 
@@ -25,7 +24,7 @@ router.post("/", async (req, res) => {
 
 router.get('/api/questions', async (req, res) => {
     try {
-      const questions = await Question.find(); // Mongoose to fetch data
+      const questions = await Question.find();
       console.log(questions)
       res.json(questions);
     } catch (error) {
