@@ -28,29 +28,38 @@ const Practice = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div>
-      <h1>Practice Questions</h1>
+    <div className="practice-container">
+    
+      <h1 className="practice-title">Practice Questions</h1>
       <ul>
+      <div className="flex-div">
         {questions.length > 0 ? (
           questions.map((question) => (
-            <div key={question._id}>
-              <h3>{question.title}</h3>
-              <p>{question.description}</p>
-              <p>Created At: {new Date(question.createdAt).toLocaleDateString()}</p>
-              <div>
-                <h4>Test Cases:</h4>
-                <ul>
-                  {question.testCases.map((testCase, index) => (
-                    <li key={index}>{testCase}</li>
-                  ))}
-                </ul>
+            <div key={question._id} className="question-box">
+              <div className="question-details">
+                <h3 className="question-title">{question.title}</h3>
+                <p className="question-description">{question.description}</p>
+                <p className="question-date">
+                  Created At: {new Date(question.createdAt).toLocaleDateString()}
+                </p>
+                {/* <div className="test-cases">
+                  <h4>Test Cases:</h4>
+                  <ul>
+                    {question.testCases.map((testCase, index) => (
+                      <li key={index} className="test-case-item">{testCase}</li>
+                    ))}
+                  </ul>
+                </div> */}
               </div>
+              <button className="view-button">View</button>
             </div>
-          ))
+          )) 
         ) : (
           <p>No questions available</p>
         )}
+        </div>
       </ul>
+     
     </div>
   );
 };

@@ -55,7 +55,7 @@ const Admin = () => {
     const questionData = { title, description, testCases };
 
     try {
-      const response = await post('/api/Questions', questionData);
+      const response = await post('/api/questions', questionData);
       alert('Question created successfully!');
       setTitle("");
       setDescription("");

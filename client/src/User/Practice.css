@@ -1,35 +1,96 @@
-.dropbtn {
-    background-color: #04aa6d;
-    color: white;
-    padding: 16px;
-    font-size: 16px;
+/* Basic layout styling */
+.practice-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    color: #333;
+    background-color: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .flex-div{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .question-details{
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Title */
+  .practice-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #212529;
+    margin-bottom: 20px;
+  }
+  
+  /* Question box styling */
+  .question-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    margin: 10px 0;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  /* Question details */
+  .question-details {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .question-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #212529;
+  }
+  
+  .question-description {
+    font-size: 1rem;
+    color: #6c757d;
+  }
+  
+  /* Created date styling */
+  .question-date {
+    font-size: 0.9rem;
+    color: #adb5bd;
+  }
+  
+  /* Test cases section */
+  .test-cases {
+    font-size: 0.9rem;
+    color: #343a40;
+  }
+  
+  .test-case-item {
+    list-style-type: none;
+    padding: 5px;
+    border-bottom: 1px solid #e9ecef;
+  }
+  
+  .test-case-item:last-child {
+    border-bottom: none;
+  }
+  
+  /* Button styling */
+  .view-button {
+    width: 30%;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: #fff;
+    font-weight: bold;
     border: none;
-}
-
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f1f1f1;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-}
-
-
-.dropdown-content a {
-    color: black;
-    padding: 1px;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdown-content a:hover {background-color: #ddd;}
-
-.dropdown:hover .dropdown-content{display: block;}
-
-.dropdown:hover .dropbtn {background-color: #3e8e41;}
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .view-button:hover {
+    background-color: #0056b3;
+  }
+  

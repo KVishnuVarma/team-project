@@ -1,16 +1,20 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { post } from "../services/Api";
 import { toast } from "react-hot-toast";
+
 
 export default function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false); 
+  const navigate= useNavigate();
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
 
     if (!name || !email || !password) {
       toast.error("All fields are required!");
@@ -31,6 +35,8 @@ export default function Register() {
 
       if (request.status === 200) {
         toast.success(response.message);
+        navigate('/login');
+        
       }
       console.log(response);
     } catch (error) {
@@ -65,7 +71,7 @@ export default function Register() {
           />
         </div>
         <div>
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password" className="pass">Password</label>
           <input
             type="password"
             onChange={(e) => setPassword(e.target.value)}
