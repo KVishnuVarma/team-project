@@ -17,10 +17,20 @@ const UserL = () => {
     <div className={`container ${isDarkMode ? "dark-mode" : "light-mode"}`}>
       <div className="sidebar">
         <ul>
-          <li className="sidebar-item">
+          {/* <li className="sidebar-item">
             <img src="/logo.jpeg" className="icon" alt="Free Code Logo" />
             <h2 className="label">Free Code</h2>
+          </li> */}
+
+
+          <li className="sidebar-item">
+            <Link to="/user/profile">
+              {/* <PiStudent className='icon' /> */}
+              <img src="/logo.jpeg" className="icon" alt="Free Code Logo" />
+              <div className="label">Free Code</div>
+            </Link>
           </li>
+
           <li className="sidebar-item">
             <Link to="/user/profile">
               <PiStudent className='icon' />
