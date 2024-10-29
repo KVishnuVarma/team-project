@@ -76,7 +76,7 @@ const Admin = () => {
       <div className="sidebar">
         <ul>
           <li>
-            <img src="/logo.png" className="icon" alt="Free Code Logo" />
+            <img src="/logo.jpeg" className="icon" alt="Free Code Logo" />
             <h2 className="label">Free Code</h2>
           </li>
           <li onClick={() => setSelectedSection("home")}>
