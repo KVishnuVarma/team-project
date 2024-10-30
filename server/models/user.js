@@ -42,7 +42,7 @@ const userSchema = new mongoose.Schema({
     profileImage: {
         type : String ,
         default : "https://static.vecteezy.com/system/resources/thumbnails/002/002/403/small/man-with-beard-avatar-character-isolated-icon-free-vector.jpg"
-    }  // Stores path to the profile image
+    } 
 }, { timestamps: true });
 
 const UserModel = mongoose.model('User', userSchema);

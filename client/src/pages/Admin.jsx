@@ -11,7 +11,7 @@ import FourthYears from '../Admin/FourthYears';
 const Admin = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [testCases, setTestCases] = useState([""]);
+  const [testCases, setTestCases] = useState([{ input: "", expectedOutput: "" }]);
   const [currentDate, setCurrentDate] = useState("");
   const [selectedSection, setSelectedSection] = useState("createQuestion");
   const [users, setUsers] = useState([]);
@@ -34,20 +34,20 @@ const Admin = () => {
     getUsers();
   }, []);
 
-  const handleTestCaseChange = (index, value) => {
+  const handleTestCaseChange = (index, field, value) => {
     const updatedTestCases = [...testCases];
-    updatedTestCases[index] = value;
+    updatedTestCases[index][field] = value;
     setTestCases(updatedTestCases);
   };
 
   const handleAddTestCase = () => {
-    setTestCases([...testCases, ""]);
+    setTestCases([...testCases, { input: "", expectedOutput: "" }]);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!title || !description || testCases.some(tc => !tc)) {
+    if (!title || !description || testCases.some(tc => !tc.input || !tc.expectedOutput)) {
       alert("Please fill in all fields and test cases.");
       return;
     }
@@ -59,7 +59,7 @@ const Admin = () => {
       alert('Question created successfully!');
       setTitle("");
       setDescription("");
-      setTestCases([""]);
+      setTestCases([{ input: "", expectedOutput: "" }]);
       setError("");
     } catch (error) {
       console.error("Error creating question:", error);
@@ -137,11 +137,19 @@ const Admin = () => {
               <div className="form-group">
                 <label>Test Cases:</label>
                 {testCases.map((testCase, index) => (
-                  <div key={index}>
+                  <div key={index} className="test-case">
                     <input
                       type="text"
-                      value={testCase}
-                      onChange={(e) => handleTestCaseChange(index, e.target.value)}
+                      placeholder="Input"
+                      value={testCase.input}
+                      onChange={(e) => handleTestCaseChange(index, 'input', e.target.value)}
+                      required
+                    />
+                    <input
+                      type="text"
+                      placeholder="Expected Output"
+                      value={testCase.expectedOutput}
+                      onChange={(e) => handleTestCaseChange(index, 'expectedOutput', e.target.value)}
                       required
                     />
                   </div>

@@ -15,37 +15,36 @@ function EditorComponent() {
   const [problem, setProblem] = useState({
     title: "Loading...",
     description: "",
-    inputFormat: "",
-    sampleInput: "",
-    expectedOutput: "",
-    testCases : []
+    sampleInput: "", 
+    testCases: [],
   });
 
   const { id } = useParams();
 
-  // Fetch problem data by ID
-  async function HandleProfileInfo() {
+  async function fetchProblemData() {
     try {
-      const response = await fetch(`http://localhost:5000/api/questions/api/question/1/${id}`, {
-        credentials: "include",
-      });
+      const response = await fetch(
+        `http://localhost:5000/api/questions/api/question/1/${id}`,
+        {
+          credentials: "include",
+        }
+      );
       const data = await response.json();
-      console.log(data)
-      setProblem({
-        title: data.title,
-        description: data.description,
-        inputFormat: data.testCases[0],
-        sampleInput: data.testCases[0],
-        expectedOutput: data.expectedOutput ,
-        testCases : data.testCases[0]
-      });
+      if (data.testCases && data.testCases.length > 0) {
+        setProblem({
+          title: data.title,
+          description: data.description,
+          sampleInput: data.sampleInput || "",
+          testCases: data.testCases,
+        });
+      }
     } catch (error) {
       console.error("Error fetching problem data:", error);
     }
   }
 
   useEffect(() => {
-    HandleProfileInfo();
+    fetchProblemData();
   }, [id]);
 
   // Timer format
@@ -59,20 +58,24 @@ function EditorComponent() {
   useEffect(() => {
     let timerInterval = null;
     if (isTimerRunning && timer > 0) {
-      timerInterval = setInterval(() => setTimer((prevTime) => prevTime - 1), 1000);
+      timerInterval = setInterval(
+        () => setTimer((prevTime) => prevTime - 1),
+        1000
+      );
     } else if (timer === 0) {
       setIsTimerRunning(false);
     }
     return () => clearInterval(timerInterval);
   }, [isTimerRunning, timer]);
 
-  // Start Timer
   const startTimer = () => {
-    setTimer(3600);
+    if (timer === 0) {
+      setTimer(3600);
+    }
     setIsTimerRunning(true);
   };
 
-  // Handle code execution (Run)
+
   const handleRun = async () => {
     startTimer();
     setShowSampleTest(false);
@@ -82,26 +85,38 @@ function EditorComponent() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          code,
-          language,
-          input_data: problem.testCases,
+          code_input: {
+            code,
+            language,
+            input_data: problem.sampleInput,
+          },
+          question_id: id,
         }),
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
       const data = await response.json();
       if (data.test_results && data.test_results.length > 0) {
         const firstTestResult = data.test_results[0];
         setShowSampleTest(firstTestResult.test_passed);
-        setCompilerError(!firstTestResult.test_passed ? "Sample test case failed! Check your logic." : null);
+        setCompilerError(
+          !firstTestResult.test_passed
+            ? "Sample test case failed! Check your logic."
+            : null
+        );
         setOutput([firstTestResult]);
       } else {
         setOutput([{ error: "No output returned from the execution." }]);
       }
     } catch (error) {
+      setCompilerError(`Error executing code: ${error.message}`);
       setOutput([{ error: `Error executing code: ${error.message}` }]);
     }
   };
 
-  // Handle code submission
   const handleSubmit = async () => {
     startTimer();
     setCompilerError(null);
@@ -109,19 +124,32 @@ function EditorComponent() {
       const response = await fetch("http://127.0.0.1:8000/execute/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ code, language, input_data: "" }),
+        body: JSON.stringify({
+          code_input: {
+            code,
+            language,
+            input_data: problem.testCases.map(tc => tc.input),
+          },
+          question_id: id,
+        }),
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
       const data = await response.json();
       if (data.test_results) {
         setOutput(data.test_results);
-        const allTestsPassed = data.test_results.every((test) => test.test_passed);
+        const allTestsPassed = data.test_results.every(test => test.test_passed);
         setShowCongrats(allTestsPassed);
         setCompilerError(!allTestsPassed ? "One or more test cases failed." : null);
       } else {
         setOutput([{ error: "No test results returned from the execution." }]);
       }
     } catch (error) {
-      setOutput([{ error: `Error executing code: ${error.message}` }]);
+      setCompilerError(`Error submitting code: ${error.message}`);
+      setOutput([{ error: `Error submitting code: ${error.message}` }]);
     }
   };
 
@@ -135,15 +163,22 @@ function EditorComponent() {
         <div className="left-panel">
           <h2>{problem.title}</h2>
           <p>{problem.description}</p>
-          <p><strong>Input Format:</strong> {problem.inputFormat}</p>
-          {/* <p><strong>Sample Input:</strong> {problem.sampleInput}</p> */}
-          <p><strong>Expected Output:</strong> {problem.expectedOutput}</p>
+          <p>
+            <strong>Input Format:</strong> {problem.inputFormat || "N/A"}
+          </p>
+          <p>
+            <strong>Expected Output:</strong> {problem.expectedOutput || "N/A"}
+          </p>
         </div>
 
         <div className="right-panel">
           <div className="language-selection">
             <label htmlFor="language">Select Language: </label>
-            <select id="language" value={language} onChange={(e) => setLanguage(e.target.value)}>
+            <select
+              id="language"
+              value={language}
+              onChange={(e) => setLanguage(e.target.value)}
+            >
               <option value="python">Python</option>
               <option value="java">Java</option>
               <option value="c">C</option>
@@ -158,31 +193,74 @@ function EditorComponent() {
             onChange={(newValue) => setCode(newValue || code)}
           />
 
-          <div className="timer"><h3>{formatTime(timer)}</h3></div>
-
-          <div className="btn-div">
-            <button className="run-btn" onClick={handleRun}>Run Code</button>
-            <button className="submit-btn" onClick={handleSubmit}>Submit Code</button>
+          <div className="timer">
+            <h3>{formatTime(timer)}</h3>
           </div>
 
-          {showCongrats && <div className="congrats"><h2>Congratulations! All Test Cases Passed!</h2></div>}
-          {showSampleTest && <div className="sample"><h3>Sample Test Case Passed</h3></div>}
-          {compilerError && <div className="error"><h3>{compilerError}</h3></div>}
+          <div className="btn-div">
+            <button className="run-btn" onClick={handleRun}>
+              Run Code
+            </button>
+            <button className="submit-btn" onClick={handleSubmit}>
+              Submit Code
+            </button>
+          </div>
+
+          {showCongrats && (
+            <div className="congrats">
+              <h2>Congratulations! All Test Cases Passed!</h2>
+            </div>
+          )}
+          {showSampleTest && (
+            <div className="sample">
+              <h3>Sample Test Case Passed</h3>
+            </div>
+          )}
+          {compilerError && (
+            <div className="error">
+              <h3>{compilerError}</h3>
+            </div>
+          )}
 
           <div className="output-section">
             <h3>Output:</h3>
             {output.length > 0 ? (
               output.map((result, index) => (
-                <div key={index} className={`output-result ${result.test_passed ? "pass" : "fail"}`}>
-                  <p><strong>Test Case {index + 1}:</strong></p>
-                  <p><strong>Input:</strong> {result.input || problem.sampleInput}</p>
-                  <p><strong>Expected Output:</strong> {result.expected_output || "N/A"}</p>
-                  <p><strong>User Output:</strong> {result.user_output || "Error"}</p>
-                  {result.error && <p className="error-msg"><strong>Error:</strong> {result.error}</p>}
-                  <p><strong>Result:</strong> {result.test_passed ? "Passed" : "Failed"}</p>
+                <div
+                  key={index}
+                  className={`output-result ${
+                    result.test_passed ? "pass" : "fail"
+                  }`}
+                >
+                  <p>
+                    <strong>Test Case {index + 1}:</strong>
+                  </p>
+                  <p>
+                    <strong>Input:</strong>{" "}
+                    {result.input || problem.sampleInput}
+                  </p>
+                  <p>
+                    <strong>Expected Output:</strong>{" "}
+                    {result.expected_output || "N/A"}
+                  </p>
+                  <p>
+                    <strong>User Output:</strong>{" "}
+                    {result.user_output || "Error"}
+                  </p>
+                  {result.error && (
+                    <p className="error-msg">
+                      <strong>Error:</strong> {result.error}
+                    </p>
+                  )}
+                  <p>
+                    <strong>Result:</strong>{" "}
+                    {result.test_passed ? "Passed" : "Failed"}
+                  </p>
                 </div>
               ))
-            ) : <p>No output available yet.</p>}
+            ) : (
+              <p>No output available yet.</p>
+            )}
           </div>
         </div>
       </div>

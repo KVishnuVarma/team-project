@@ -1,22 +1,31 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const questionSchema = new mongoose.Schema({
+const questionSchema = new mongoose.Schema(
+  {
     title: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     description: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
-    testCases: {
-        type: [String], 
-        required: true
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    },
-});
+    testCases: [
+      {
+        input: {
+          type: String,
+          required: true,
+        },
+        expectedOutput: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
+  },
+  {
+    timestamps: true, 
+  }
+);
 
-export default mongoose.model('Question', questionSchema);
+export default mongoose.model("Question", questionSchema);

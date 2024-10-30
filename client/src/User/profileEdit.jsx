@@ -17,7 +17,6 @@ const ProfileUpdate = () => {
     const navigate = useNavigate();
     const [isEditing, setIsEditing] = useState(false);
 
-    // Fetch profile data
     async function handleProfileInfo() {
         const response = await fetch('http://localhost:5000/api/findProfile', {
             credentials: 'include'
@@ -30,12 +29,10 @@ const ProfileUpdate = () => {
         handleProfileInfo();
     }, []);
 
-    // Handle form input change
     const handleChange = (e) => {
         setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
     };
 
-    // Handle profile update
     const handleUpdate = async () => {
         try {
             const response = await fetch('http://localhost:5000/api/updateProfile', {

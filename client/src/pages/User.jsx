@@ -3,7 +3,7 @@ import { FaFileUpload } from "react-icons/fa";
 import { PiStudent } from "react-icons/pi";
 import { IoIosLogOut } from "react-icons/io";
 import { MdLeaderboard, MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
-import { Link, Outlet } from 'react-router-dom'; // Use Link for navigation and Outlet for nested routes
+import { Link, Outlet } from 'react-router-dom';
 import './User.css';
 
 const User = () => {
@@ -57,7 +57,6 @@ const User = () => {
       </div>
 
       <div className="content">
-        {/* This Outlet will display the nested routes */}
         <Outlet />
       </div>
     </div>

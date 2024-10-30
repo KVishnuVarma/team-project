@@ -1,10 +1,8 @@
-/* General container styling */
 .tests-container {
   padding: 20px;
   font-family: Arial, sans-serif;
 }
 
-/* Header styling with horizontal alignment for all elements */
 .tests-header {
   display: flex;
   align-items: center;
@@ -20,17 +18,15 @@
   margin-right: auto;
 }
 
-/* Search input styling */
 .search-input {
   max-width: 300px;
   padding: 8px;
   border-radius: 4px;
   border: 1px solid #ccc;
   font-size: 16px;
-  margin-right: 10px; /* Space between search and filter button */
+  margin-right: 10px;
 }
 
-/* Filter button styling with hover effect */
 .filter-button {
   background-color: #007bff;
   color: #fff;
@@ -46,7 +42,6 @@
   background-color: #0056b3;
 }
 
-/* Styling for the filter dropdown */
 .filter-select {
   padding: 8px;
   font-size: 16px;
@@ -62,15 +57,12 @@
   border-color: #007bff;
 }
 
-
-/* Grid styling for tests, responsive for different screen sizes */
 .tests-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
 
-/* Card styling with hover and responsive adjustments */
 .test-card {
   background: #fff;
   border-radius: 8px;
@@ -87,34 +79,32 @@
   transform: scale(1.05);
 }
 
-/* Status badge styling with consistent position and alignment */
 .test-status {
   font-size: 12px;
   color: #fff;
   padding: 4px 8px;
   border-radius: 4px;
-  position: absolute; /* Positions it at the top */
-  top: 10px; /* Distance from top of the card */
-  left: 50%; /* Center horizontally */
-  transform: translateX(-50%); /* Adjusts centering */
-  background-color: #ff9800; /* Example color for 'Upcoming'; customize as needed */
+  position: absolute; 
+  top: 10px; 
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ff9800;
   margin-bottom: 8px;
 }
 
 .test-status.submitted {
-  background-color: #4caf50; /* Green for submitted */
+  background-color: #4caf50;
 }
 
 .test-status.pending {
-  background-color: #9e9e9e; /* Grey for pending */
+  background-color: #9e9e9e;
 }
 
-/* Image styling */
 .test-image {
   width: 100%;
   height: auto;
   border-radius: 8px;
-  margin-top: 40px; /* Space to avoid overlap with the status label */
+  margin-top: 40px;
 }
 
 .test-title {
@@ -128,9 +118,6 @@
   color: #777;
 }
 
-/* Responsive design adjustments */
-
-/* For tablets (portrait mode) */
 @media (max-width: 768px) {
   .tests-header {
     flex-direction: column;
@@ -144,12 +131,11 @@
 
   .filter-button,
   .search-input {
-    width: 100%; /* Full width on smaller screens */
+    width: 100%;
     margin: 5px 0;
   }
 }
 
-/* For mobile devices */
 @media (max-width: 480px) {
   .tests-header h1 {
     font-size: 20px;

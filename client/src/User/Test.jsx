@@ -54,10 +54,9 @@ const tests = [
 ];
 
 export default function Tests() {
-  const [filter, setFilter] = useState("All"); // State for filtering tests
-  const [search, setSearch] = useState(""); // State for search functionality
+  const [filter, setFilter] = useState("All"); 
+  const [search, setSearch] = useState("");
 
-  // Filtered tests based on filter state and search input
   const filteredTests = tests.filter((test) => {
     const matchesFilter = filter === "All" || test.status === filter;
     const matchesSearch = test.title.toLowerCase().includes(search.toLowerCase());
@@ -76,7 +75,6 @@ export default function Tests() {
           onChange={(e) => setSearch(e.target.value)}
         />
         
-        {/* Filter Dropdown */}
         <select
           className="filter-select"
           value={filter}
@@ -92,7 +90,7 @@ export default function Tests() {
       <div className="tests-grid">
         {filteredTests.map((test, index) => (
           <Link
-            to={`/user/tests/${index}`} // Dynamic route for each test
+            to={`/user/tests/${index}`}
             key={index}
             className="test-card-link"
             style={{ textDecoration: "none", color: "inherit" }}

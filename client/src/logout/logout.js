@@ -1,7 +1,6 @@
-// src/components/Logout.js
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import authService from '../services/authService';  // Assumes authService has a logout function
+import authService from '../services/authService';
 
 const Logout = () => {
   const navigate = useNavigate();
