@@ -7,8 +7,8 @@ const Logout = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    authService.logout();    // Call the logout function to remove the token
-    navigate('/');           // Redirect to the login page
+    authService.logout();   
+    navigate('/');         
   }, [navigate]);
 
   return (

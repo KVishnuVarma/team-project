@@ -14,7 +14,7 @@ import AdminL from "./Layouts/AdminL";
 import UserL from "./Layouts/UserL";
 import ProfileUpdate from "./User/profileEdit";
 import EditorComponent from "./User/Compiler";
-import TestDetail from "./Test/TestDetail";  // Corrected the TestDetail import
+import TestDetail from "./Test/TestDetail";
 
 export default function App() {
   return (

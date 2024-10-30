@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Test.css";
 
@@ -54,20 +54,47 @@ const tests = [
 ];
 
 export default function Tests() {
+  const [filter, setFilter] = useState("All"); // State for filtering tests
+  const [search, setSearch] = useState(""); // State for search functionality
+
+  // Filtered tests based on filter state and search input
+  const filteredTests = tests.filter((test) => {
+    const matchesFilter = filter === "All" || test.status === filter;
+    const matchesSearch = test.title.toLowerCase().includes(search.toLowerCase());
+    return matchesFilter && matchesSearch;
+  });
+
   return (
     <div className="tests-container">
       <header className="tests-header">
         <h1>Tests For You</h1>
-        <input type="search" placeholder="Search" className="search-input" />
-        <button className="filter-button">Filter</button>
+        <input
+          type="search"
+          placeholder="Search"
+          className="search-input"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        
+        {/* Filter Dropdown */}
+        <select
+          className="filter-select"
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+        >
+          <option value="All">All</option>
+          <option value="Upcoming">Upcoming</option>
+          <option value="Submitted">Submitted</option>
+          <option value="Pending">Pending</option>
+        </select>
       </header>
 
       <div className="tests-grid">
-        {tests.map((test, index) => (
-          <Link 
-            to={`/user/tests/${index}`} // Updated path to include dynamic test ID
-            key={index} 
-            className="test-card-link" 
+        {filteredTests.map((test, index) => (
+          <Link
+            to={`/user/tests/${index}`} // Dynamic route for each test
+            key={index}
+            className="test-card-link"
             style={{ textDecoration: "none", color: "inherit" }}
           >
             <div className="test-card">
