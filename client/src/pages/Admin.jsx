@@ -3,8 +3,9 @@ import { FaFileUpload } from "react-icons/fa";
 import { PiStudent } from "react-icons/pi";
 import { IoHomeOutline } from "react-icons/io5";
 import { IoIosLogOut } from "react-icons/io";
-import { get, post } from '../services/Api';
+import { get, post } from '../services/Api'; // Assuming these are your API helper functions
 import './Admin.css';
+import ContestUpload from '../Admin/Contestupload';
 import ThirdYears from '../Admin/ThirdYear';
 import FourthYears from '../Admin/FourthYears';
 
@@ -17,12 +18,13 @@ const Admin = () => {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState("");
 
+  // Fetch users and set the current date on component load
   useEffect(() => {
     const today = new Date();
     const formattedDate = `${today.getDate()}-${today.getMonth() + 1}-${today.getFullYear()}`;
     setCurrentDate(formattedDate);
 
-    const getUsers = async () => {
+    const fetchUsers = async () => {
       try {
         const response = await get('/api/admin/getuser');
         setUsers(response.data);
@@ -31,22 +33,26 @@ const Admin = () => {
         setError("Failed to fetch users.");
       }
     };
-    getUsers();
+    fetchUsers();
   }, []);
 
+  // Handle test case changes
   const handleTestCaseChange = (index, field, value) => {
     const updatedTestCases = [...testCases];
     updatedTestCases[index][field] = value;
     setTestCases(updatedTestCases);
   };
 
+  // Add a new test case
   const handleAddTestCase = () => {
     setTestCases([...testCases, { input: "", expectedOutput: "" }]);
   };
 
+  // Submit the question
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Validate input
     if (!title || !description || testCases.some(tc => !tc.input || !tc.expectedOutput)) {
       alert("Please fill in all fields and test cases.");
       return;
@@ -57,6 +63,7 @@ const Admin = () => {
     try {
       const response = await post('/api/questions', questionData);
       alert('Question created successfully!');
+      // Reset fields
       setTitle("");
       setDescription("");
       setTestCases([{ input: "", expectedOutput: "" }]);
@@ -67,8 +74,10 @@ const Admin = () => {
     }
   };
 
+  // Handle logout
   const handleLogout = () => {
     setSelectedSection("logout");
+    // Add any logout logic if needed (e.g., clearing tokens)
   };
 
   return (
@@ -91,6 +100,10 @@ const Admin = () => {
             <PiStudent className='icon' />
             <div className="label">4th Years</div>
           </li>
+          <li onClick={() => setSelectedSection("contestUpload")}>
+            <FaFileUpload className='icon' />
+            <div className="label">Upload Contest</div>
+          </li>
           <li onClick={handleLogout}>
             <IoIosLogOut className='icon' />
             <div className="label">Logout</div>
@@ -104,12 +117,15 @@ const Admin = () => {
           <div className="profile-pic"></div>
         </div>
 
+        {/* Render sections based on selected navigation */}
         {selectedSection === "thirdYears" ? (
           <ThirdYears />
         ) : selectedSection === "fourthYears" ? (
           <FourthYears />
+        ) : selectedSection === "contestUpload" ? (
+          <ContestUpload />
         ) : selectedSection === "logout" ? (
-          <Logout />
+          <p>You have logged out successfully.</p> // Replace with a Logout component if needed
         ) : (
           <div className="create-question-form">
             <h3>Create a New Question</h3>
