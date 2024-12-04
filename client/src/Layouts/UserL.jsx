@@ -9,12 +9,12 @@ import '../pages/User.css';
 const UserL = () => {
   const navigate = useNavigate();
 
-  // Handle Logout
+  
   const handleLogout = () => {
-    // Clear user session (e.g., localStorage, sessionStorage, or cookies)
-    localStorage.removeItem("userToken"); // Adjust the key based on your app's logic
+    
+    localStorage.removeItem("userToken");
     sessionStorage.clear();
-    navigate('/'); // Redirect to the login or home page
+    navigate('/');
   };
 
   return (
@@ -22,10 +22,8 @@ const UserL = () => {
       <div className="sidebar">
         <ul>
           <li className="sidebar-item">
-            <Link to="/user/profile">
               <img src="/logo.jpeg" className="icon" alt="Free Code Logo" />
               <div className="label">Free Code</div>
-            </Link>
           </li>
 
           <li className="sidebar-item">
@@ -34,13 +32,13 @@ const UserL = () => {
               <div className="label">Profile</div>
             </Link>
           </li>
-
+{/* 
           <li className="sidebar-item">
             <Link to="/user/test">
               <FaFileUpload className='icon' />
               <div className="label">Test</div>
             </Link>
-          </li>
+          </li> */}
 
           <li className="sidebar-item">
             <Link to="/user/practice">
@@ -50,8 +48,16 @@ const UserL = () => {
           </li>
 
           <li className="sidebar-item">
+            <Link to="/user/contests">
+              <FaFileUpload className='icon' />
+              <div className='label'>Contest</div>
+            </Link>
+
+          </li>
+
+          <li className="sidebar-item">
             <Link to="/user/leaderboard">
-              <MdLeaderboard className='icon' />
+              <MdLeaderboard className='icon l' />
               <div className="label">Leaderboard</div>
             </Link>
           </li>

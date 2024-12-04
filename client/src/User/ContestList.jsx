@@ -1,50 +1,122 @@
-import React, { useState, useEffect } from 'react';
-import { get } from '../services/Api'; // Assuming you have a GET helper function
-import './contestList.css';
+import React, { useEffect, useState } from 'react';
+import './ContestList.css'; // Import the CSS file for styling
+import { useNavigate } from 'react-router-dom'; // Assuming you're using React Router for navigation
 
 const ContestList = () => {
-  const [questions, setQuestions] = useState([]);
-  const [error, setError] = useState("");
+    const [contests, setContests] = useState([]);
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchQuestions = async () => {
-      try {
-        const response = await get('/api/questions');
-        setQuestions(response.data);
-      } catch (error) {
-        console.error("Error fetching questions:", error);
-        setError("Failed to fetch questions.");
-      }
+    useEffect(() => {
+        async function fetchContests() {
+            try {
+                const response = await fetch('http://localhost:5000/api/contests');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch contests');
+                }
+                const data = await response.json();
+                setContests(data);
+            } catch (err) {
+                setError(err.message);
+            }
+        }
+
+        fetchContests();
+    }, []);
+
+    if (error) {
+        return <div className="error-message">Error: {error}</div>;
+    }
+
+    const handleCardClick = (contestId) => {
+        navigate(`/contests/${contestId}`); // Navigate to the contest's detail page
     };
-    fetchQuestions();
-  }, []);
 
-  return (
-    <div className="user-container">
-      <h3>Available Contests/Questions</h3>
-      {error && <p className="error-message">{error}</p>}
-      {questions.length === 0 ? (
-        <p>No contests or questions available at the moment.</p>
-      ) : (
-        <div className="questions-list">
-          {questions.map((question) => (
-            <div key={question._id} className="question-card">
-              <h4>{question.title}</h4>
-              <p>{question.description}</p>
-              <h5>Test Cases:</h5>
-              <ul>
-                {question.testCases.map((testCase, index) => (
-                  <li key={index}>
-                    <strong>Input:</strong> {testCase.input}, <strong>Expected Output:</strong> {testCase.expectedOutput}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+    // Group contests by category
+    const biweeklyContests = contests.filter(contest => contest.category === 'Biweekly');
+    const monthlyContests = contests.filter(contest => contest.category === 'Monthly');
+    const dailyContests = contests.filter(contest => contest.category === 'Daily');
+
+    return (
+        <div>
+            {/* Biweekly Battles Section */}
+            {biweeklyContests.length > 0 && (
+                <div className="contest-category-section">
+                    <h2>Biweekly Battles</h2>
+                    <div className="contest-card-container">
+                        {biweeklyContests.map((contest) => (
+                            <div
+                                key={contest._id}
+                                className="contest-card"
+                                onClick={() => handleCardClick(contest._id)}
+                            >
+                                <div className="card-content">
+                                    <h2 className="contest-title">{contest.title}</h2>
+                                    <p className="contest-description">{contest.description}</p>
+                                    <p className="contest-timing">
+                                        Starts at: {new Date(contest.startTime).toLocaleString()}
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {/* Monthly Masters Section */}
+            {monthlyContests.length > 0 && (
+                <div className="contest-category-section">
+                    <h2>Monthly Masters</h2>
+                    <div className="contest-card-container">
+                        {monthlyContests.map((contest) => (
+                            <div
+                                key={contest._id}
+                                className="contest-card"
+                                onClick={() => handleCardClick(contest._id)}
+                            >
+                                <div className="card-content">
+                                    <h2 className="contest-title">{contest.title}</h2>
+                                    <p className="contest-description">{contest.description}</p>
+                                    <p className="contest-timing">
+                                        Starts at: {new Date(contest.startTime).toLocaleString()}
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {/* Daily Contests Section */}
+            {dailyContests.length > 0 && (
+                <div className="contest-category-section">
+                    <h2>Daily Contests</h2>
+                    <div className="contest-card-container">
+                        {dailyContests.map((contest) => (
+                            <div
+                                key={contest._id}
+                                className="contest-card"
+                                onClick={() => handleCardClick(contest._id)}
+                            >
+                                <div className="card-content">
+                                    <h2 className="contest-title">{contest.title}</h2>
+                                    <p className="contest-description">{contest.description}</p>
+                                    <p className="contest-timing">
+                                        Starts at: {new Date(contest.startTime).toLocaleString()}
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {/* Message when no contests */}
+            {biweeklyContests.length === 0 && monthlyContests.length === 0 && dailyContests.length === 0 && (
+                <p className="no-contests">No active contests at the moment.</p>
+            )}
         </div>
-      )}
-    </div>
-  );
+    );
 };
 
 export default ContestList;

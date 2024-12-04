@@ -20,7 +20,6 @@ import ContestList from "./User/ContestList";
 import TestDetail from "./Test/TestDetail";
 import CompetitionQuestions from "./Test/CompetitionQuestions";
 
-
 // Layouts
 import AdminL from "./Layouts/AdminL";
 import UserL from "./Layouts/UserL";
@@ -41,13 +40,14 @@ export default function App() {
           <Route path="leaderboard" element={<Leader />} />
           <Route path="tests/:id" element={<TestDetail />} />
           <Route path="competition/:id" element={<CompetitionQuestions />} />
-          <Route path="contests" element={<ContestList />} />{/* New Contest List Route */}
+          <Route path="contests" element={<ContestList />} />
         </Route>
 
         {/* Admin Routes */}
         <Route path="/admin" element={<AdminL />}>
           <Route index element={<Admin />} />
         </Route>
+
 
         {/* Authentication Routes */}
         <Route path="/login" element={<Login />} />

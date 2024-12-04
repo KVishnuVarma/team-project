@@ -45,6 +45,19 @@ body, html {
     color: #ffffff;
 }
 
+.sidebar ul li .icon {
+    margin-left: 20px;
+    width: 40px;
+    height: 40px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease;
+    opacity: 1;
+    visibility: visible;
+  }
+
 .sidebar .label{
     font-size: 16px;
     justify-content: space-between;
@@ -52,6 +65,7 @@ body, html {
 }
 
 .sidebar img {
+    margin-right: -15px;
     width: 50px;
     height: 50px;
 }
