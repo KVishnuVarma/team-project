@@ -20,7 +20,8 @@ const Leader = () => {
 
   // Navigate to the user's recent page
   const handleExplore = (userId) => {
-    navigate(`/recent/${userId}`);
+    navigate(`/user/profileStats/${userId}`);
+
   };
 
   useEffect(() => {

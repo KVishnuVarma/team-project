@@ -19,6 +19,7 @@ import EditorComponent from "./User/Compiler";
 import ContestList from "./User/ContestList";
 import TestDetail from "./Test/TestDetail";
 import CompetitionQuestions from "./Test/CompetitionQuestions";
+import ProfileStats from "./User/ProfileStats";
 
 // Layouts
 import AdminL from "./Layouts/AdminL";
@@ -39,6 +40,7 @@ export default function App() {
           <Route path="practice/editor/:id" element={<EditorComponent />} />
           <Route path="leaderboard" element={<Leader />} />
           <Route path="tests/:id" element={<TestDetail />} />
+          <Route path="profileStats/:id" element={<ProfileStats />} /> {/* FIXED: Changed from absolute to relative */}
           <Route path="competition/:id" element={<CompetitionQuestions />} />
           <Route path="contests" element={<ContestList />} />
         </Route>
@@ -47,7 +49,6 @@ export default function App() {
         <Route path="/admin" element={<AdminL />}>
           <Route index element={<Admin />} />
         </Route>
-
 
         {/* Authentication Routes */}
         <Route path="/login" element={<Login />} />

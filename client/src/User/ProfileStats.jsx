@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./ProfileStats.css";
+// import "./ProfileStats.css";
 
 const ProfileStats = () => {
   const [stats, setStats] = useState({

@@ -22,6 +22,7 @@ const ProfileUpdate = () => {
             credentials: 'include'
         });
         const data = await response.json();
+        console.log(data);
         setUserInfo(data);
     }
 

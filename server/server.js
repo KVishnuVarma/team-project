@@ -59,7 +59,7 @@ app.get('/api/findProfile', async (req, res) => {
             return res.status(403).json({ message: 'No token provided' });
         }
 
-        const decode = jwt.verify(token, process.env.JWT_SECRET); // Verify JWT
+        const decode = jwt.verify(token, process.env.JWT_SECRETE); // Verify JWT
         const userData = await UserModel.findOne({ _id: decode.userId });
 
         if (!userData) {
