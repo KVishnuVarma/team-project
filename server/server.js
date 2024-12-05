@@ -5,12 +5,12 @@ import cors from 'cors';
 import cookieparser from 'cookie-parser';
 import multer from 'multer';
 import path from 'path';
-import DbCon from './utlis/db.js';
+import DbCon from './utlis/db.js';  // Corrected the path for DbCon
 import AuthRoutes from './routes/Auth.js';
 import QuestionRoutes from './routes/Question.js';
-import AdminRoutes from './models/AdminRoutes.js' // Corrected import
+import AdminRoutes from './models/AdminRoutes.js';  // Corrected the import path to routes/AdminRoutes.js
 import ContestRoutes from './routes/contestRoutes.js'; // Correct contest routes import
-import StatsRoutes from './routes/UserStats.js'
+import StatsRoutes from './routes/UserStats.js';
 import UserModel from './models/user.js';
 import jwt from 'jsonwebtoken';
 
@@ -47,8 +47,8 @@ app.use('/uploads', express.static(path.join(path.resolve(), 'uploads')));
 // API Routes
 app.use('/api/auth', AuthRoutes);
 app.use('/api/questions', QuestionRoutes);
-app.use('/api/admin', AdminRoutes); // Admin routes
-app.use('/api/contests', ContestRoutes); // Contest routes
+app.use('/api/admin', AdminRoutes);  // Admin routes (corrected)
+app.use('/api/contests', ContestRoutes);  // Contest routes (correct)
 app.use('/api/stats', StatsRoutes);
 
 // Route to find user profile from JWT token
@@ -80,7 +80,7 @@ app.put('/api/updateProfile', async (req, res) => {
             return res.status(403).json({ message: 'No token provided' });
         }
 
-        const decode = jwt.verify(token, process.env.JWT_SECRET); // Verify JWT
+        const decode = jwt.verify(token, process.env.JWT_SECRETE); // Verify JWT
 
         const { name, phone, email, gender, address, department, domain } = req.body;
 

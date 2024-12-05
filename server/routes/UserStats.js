@@ -9,7 +9,7 @@ router.get("/profileStats", async (req, res) => {
     const token = req.cookies.token;
     if (!token) return res.status(403).json({ message: "No token provided" });
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRETE);
     const stats = await UserStats.findOne({ userId: decoded.userId });
 
     if (!stats) return res.status(404).json({ message: "Stats not found" });

@@ -1,3 +1,4 @@
+
 /* General styles for ContestList component */
 .contest-list {
     max-width: 1200px;
@@ -53,15 +54,15 @@
 
 /* Add different colors for categories */
 .contest-card:nth-child(3n+1) {
-    background-color: #FADADD     ; /* Soft red */
+    background-color: #FADADD; /* Soft red */
 }
 
 .contest-card:nth-child(3n+2) {
-    background-color: #FFFACD      ; /* Soft green */
+    background-color: #FFFACD; /* Soft yellow */
 }
 
 .contest-card:nth-child(3n) {
-    background-color: #E0FFFF      ; /* Soft yellow */
+    background-color: #E0FFFF; /* Soft blue */
 }
 
 /* Hover effect */
@@ -73,7 +74,9 @@
 /* Card content styling */
 .card-content {
     width: 100%;
-    height: 100%; /* Full height for scrolling effect */
+    height: auto; /* Auto height for flexible content */
+    max-height: 100%; /* Ensure it does not exceed card height */
+    overflow-y: auto; /* Add scroll for overflowing content */
     position: absolute;
     bottom: -100%; /* Initially hidden outside the bottom of the card */
     background: linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
@@ -105,6 +108,7 @@
     color: #333;
     margin-bottom: 15px;
     line-height: 1.5;
+    overflow-wrap: break-word; /* Ensure long text wraps properly */
 }
 
 /* Timing information styling */

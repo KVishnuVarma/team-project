@@ -14,11 +14,12 @@ import Test from "./User/Test";
 import Practice from "./User/Practice";
 import Leader from "./User/Leader";
 import Dashboard from "./User/Dashboard";
-import ProfileUpdate from "./User/profileEdit";
+import ProfileUpdate from "./User/ProfileEdit";
 import EditorComponent from "./User/Compiler";
 import ContestList from "./User/ContestList";
 import TestDetail from "./Test/TestDetail";
 import CompetitionQuestions from "./Test/CompetitionQuestions";
+import QuestionsPage from "./User/Questionpage"; // Correct import path
 import ProfileStats from "./User/ProfileStats";
 
 // Layouts
@@ -28,7 +29,7 @@ import UserL from "./Layouts/UserL";
 export default function App() {
   return (
     <Router>
-      <Toaster />
+      <Toaster /> {/* Notification toaster for toast messages */}
       <Routes>
         {/* User Routes */}
         <Route path="/user" element={<UserL />}>
@@ -40,9 +41,14 @@ export default function App() {
           <Route path="practice/editor/:id" element={<EditorComponent />} />
           <Route path="leaderboard" element={<Leader />} />
           <Route path="tests/:id" element={<TestDetail />} />
-          <Route path="profileStats/:id" element={<ProfileStats />} /> {/* FIXED: Changed from absolute to relative */}
-          <Route path="competition/:id" element={<CompetitionQuestions />} />
+          <Route path="profileStats/:id" element={<ProfileStats />} />
+          
+          {/* Contest-related routes */}
           <Route path="contests" element={<ContestList />} />
+          <Route path="contests/:contestId/questions" element={<QuestionsPage />} />
+          
+          {/* Optional: If you're using competition-specific questions */}
+          <Route path="competition/:contestId/questions" element={<CompetitionQuestions />} />
         </Route>
 
         {/* Admin Routes */}
@@ -55,7 +61,7 @@ export default function App() {
         <Route path="/register" element={<Register />} />
 
         {/* Default and Fallback Routes */}
-        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/" element={<Navigate to="/login" />} /> {/* Redirect to login by default */}
         <Route path="*" element={<h2 style={{ textAlign: "center" }}>404 - Page Not Found</h2>} />
       </Routes>
     </Router>

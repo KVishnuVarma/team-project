@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import "./ProfileStats.css";
+import "./ProfileStats.css";
 
 const ProfileStats = () => {
   const [stats, setStats] = useState({
@@ -10,6 +10,8 @@ const ProfileStats = () => {
     recentContests: [],
   });
 
+  const [error, setError] = useState(null); // Add error state for better debugging
+
   useEffect(() => {
     const fetchStats = async () => {
       try {
@@ -19,13 +21,15 @@ const ProfileStats = () => {
         });
 
         if (!response.ok) {
-          throw new Error(`Error: ${response.status}`);
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
 
         const data = await response.json();
-        setStats(data);
+        console.log(data); // Ensure the data structure matches the expected format
+        setStats(data); // Update state with the fetched data
       } catch (err) {
         console.error("Error fetching stats:", err);
+        setError(err.message); // Update error state
       }
     };
 
@@ -35,36 +39,48 @@ const ProfileStats = () => {
   return (
     <div className="profile-stats">
       <h2>Profile Overview</h2>
-      <div className="stats-section">
-        <div className="stat-item">
-          <h3>Rank</h3>
-          <p>{stats.rank}</p>
+      {error ? (
+        <p style={{ color: "red" }}>Error: {error}</p> // Display error message
+      ) : (
+        <div className="stats-section">
+          <div className="stat-item">
+            <h3>Rank</h3>
+            <p>{stats.rank || "N/A"}</p>
+          </div>
+          <div className="stat-item">
+            <h3>Questions Solved</h3>
+            <p>{stats.solvedQuestions || 0}</p>
+          </div>
+          <div className="stat-item">
+            <h3>Streak</h3>
+            <p>{stats.streak || 0} days</p>
+          </div>
+          <div className="stat-item">
+            <h3>Recent Activity</h3>
+            <ul>
+              {stats.recentActivity.length > 0 ? (
+                stats.recentActivity.map((activity, index) => (
+                  <li key={index}>{activity}</li>
+                ))
+              ) : (
+                <li>No recent activity</li>
+              )}
+            </ul>
+          </div>
+          <div className="stat-item">
+            <h3>Recent Contests</h3>
+            <ul>
+              {stats.recentContests.length > 0 ? (
+                stats.recentContests.map((contest, index) => (
+                  <li key={index}>{contest}</li>
+                ))
+              ) : (
+                <li>No recent contests</li>
+              )}
+            </ul>
+          </div>
         </div>
-        <div className="stat-item">
-          <h3>Questions Solved</h3>
-          <p>{stats.solvedQuestions}</p>
-        </div>
-        <div className="stat-item">
-          <h3>Streak</h3>
-          <p>{stats.streak} days</p>
-        </div>
-        <div className="stat-item">
-          <h3>Recent Activity</h3>
-          <ul>
-            {stats.recentActivity.map((activity, index) => (
-              <li key={index}>{activity}</li>
-            ))}
-          </ul>
-        </div>
-        <div className="stat-item">
-          <h3>Recent Contests</h3>
-          <ul>
-            {stats.recentContests.map((contest, index) => (
-              <li key={index}>{contest}</li>
-            ))}
-          </ul>
-        </div>
-      </div>
+      )}
     </div>
   );
 };
