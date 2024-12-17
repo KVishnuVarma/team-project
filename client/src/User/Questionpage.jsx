@@ -1,11 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"; // Extract contestId from the URL
+import "./Questionpage.css";
+import { useParams } from "react-router-dom";
+import CircularProgress from "@mui/material/CircularProgress"; // Material-UI for circular progress
 
 const QuestionsPage = () => {
-  const { contestId } = useParams(); // Get the contestId from the route
-  const [questions, setQuestions] = useState([]); // Initialize as empty array
+  const { contestId } = useParams();
+  const [questions, setQuestions] = useState([]);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true); // Track loading state
+  const [loading, setLoading] = useState(true);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [selectedOptions, setSelectedOptions] = useState({});
+  const [startTime, setStartTime] = useState(null);
+  const [quizComplete, setQuizComplete] = useState(false);
+  const [score, setScore] = useState(0);
+  const [accuracy, setAccuracy] = useState(0);
+  const [points, setPoints] = useState(0);
 
   useEffect(() => {
     async function fetchQuestions() {
@@ -16,11 +25,9 @@ const QuestionsPage = () => {
         }
         const data = await response.json();
 
-        console.log("API Response:", data);  // Log the response to check its structure
-
-        // Ensure that the data contains a 'questions' array
         if (data && Array.isArray(data.questions)) {
           setQuestions(data.questions);
+          setStartTime(Date.now());
         } else {
           setQuestions([]);
           setError("Questions data is not in the expected format.");
@@ -35,36 +42,122 @@ const QuestionsPage = () => {
     fetchQuestions();
   }, [contestId]);
 
+  const handlePrevious = () => {
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    }
+  };
+
+  const handleSubmit = () => {
+    const endTime = Date.now();
+    const totalTime = ((endTime - startTime) / 1000).toFixed(2);
+
+    let correctAnswers = 0;
+    questions.forEach((question, index) => {
+      if (selectedOptions[index] === question.correctOption) {
+        correctAnswers += 1;
+      }
+    });
+
+    const userScore = (correctAnswers / questions.length) * 100;
+    setScore(userScore);
+    setAccuracy(userScore.toFixed(2));
+    setQuizComplete(true);
+
+    if (userScore > 75) {
+      setPoints(10);
+    } else if (userScore >= 50) {
+      setPoints(5);
+    } else if (userScore >= 35) {
+      setPoints(3);
+    } else {
+      setPoints(0);
+    }
+  };
+
+  const handleOptionChange = (optionIndex) => {
+    setSelectedOptions((prev) => ({
+      ...prev,
+      [currentQuestionIndex]: optionIndex,
+    }));
+  };
+
   if (loading) {
-    return <div className="loading-message">Loading questions...</div>; // Loading indicator
+    return <div className="loading-message">Loading questions...</div>;
   }
 
   if (error) {
-    return <div className="error-message">Error: {error}</div>; // Error message if fetch fails
+    return <div className="error-message">Error: {error}</div>;
   }
 
   return (
     <div className="questions-page">
-      <h1>Questions for Contest</h1>
-      {questions.length === 0 ? (
-        <p>No questions available for this contest.</p> // Display message if no questions
+      {!quizComplete ? (
+        <>
+          <div className="question-container">
+            <h2>{questions[currentQuestionIndex].title}</h2>
+          </div>
+          <div className="options-container">
+            {questions[currentQuestionIndex].options.map((option, index) => (
+              <label key={index} className="option-item">
+                <input
+                  type="radio"
+                  name={`question-${currentQuestionIndex}`}
+                  value={index}
+                  checked={selectedOptions[currentQuestionIndex] === index}
+                  onChange={() => handleOptionChange(index)}
+                />
+                {option}
+              </label>
+            ))}
+          </div>
+          <div className="navigation-buttons">
+            <button
+              onClick={handlePrevious}
+              disabled={currentQuestionIndex === 0}
+              className="nav-button"
+            >
+              Previous
+            </button>
+            {currentQuestionIndex < questions.length - 1 ? (
+              <button onClick={handleNext} className="nav-button">
+                Next
+              </button>
+            ) : (
+              <button onClick={handleSubmit} className="submit-button">
+                Submit
+              </button>
+            )}
+          </div>
+        </>
       ) : (
-        <ul className="questions-list">
-          {questions.map((question) => (
-            <li key={question._id} className="question-item">
-              <h2>{question.title}</h2>
-              <p>{question.description}</p>
-              <ul className="options-list">
-                {question.options.map((option, index) => (
-                  <li key={index} className="option-item">
-                    {index + 1}. {option}
-                  </li>
-                ))}
-              </ul>
-              <p><strong>Correct Option:</strong> {question.correctOption + 1}</p> {/* Display the correct option index */}
-            </li>
-          ))}
-        </ul>
+        <div className="results-container">
+          <h2>Quiz Results</h2>
+          <div className="circular-progress-container">
+            <CircularProgress
+              variant="determinate"
+              value={accuracy} // The accuracy percentage value
+              size={120} // Adjust size as needed
+              thickness={5} // Adjust thickness as needed
+              style={{ color: "#007bff" }} // Circle color
+            />
+            <div className="accuracy-text">
+              {accuracy}% Accuracy
+            </div>
+          </div>
+          <p>Score: {score.toFixed(2)}%</p>
+          {points > 0 ? (
+            <p>Leaderboard Points: {points}</p>
+          ) : (
+            <p style={{ color: "red" }}>You have failed the quiz.</p>
+          )}
+        </div>
       )}
     </div>
   );

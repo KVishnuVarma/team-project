@@ -1,59 +1,60 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./ProfileStats.css";
 
 const ProfileStats = () => {
   const [stats, setStats] = useState({
-    rank: "",
+    rank: "N/A",
     solvedQuestions: 0,
     recentActivity: [],
     streak: 0,
     recentContests: [],
   });
 
-  const [error, setError] = useState(null); // Add error state for better debugging
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/stats/profileStats", {
-          method: "GET",
-          credentials: "include", // Ensures cookies are sent with the request
+        // Axios GET request with credentials
+        const response = await axios.get("http://localhost:5000/api/stats/profile", {
+          withCredentials: true, // Required to include cookies in the request
         });
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log(data); // Ensure the data structure matches the expected format
-        setStats(data); // Update state with the fetched data
+        console.log("Fetched stats:", response.data); // Debugging log
+        setStats(response.data); // Update stats state
+        setError(null); // Reset any previous error
       } catch (err) {
-        console.error("Error fetching stats:", err);
-        setError(err.message); // Update error state
+        console.error(
+          "Error fetching stats:",
+          err.message || err.response?.statusText
+        ); // Log the error
+        setError(err.message || "Failed to fetch stats."); // Set error state
       }
     };
 
-    fetchStats();
+    fetchStats(); // Call the fetch function
   }, []);
 
   return (
     <div className="profile-stats">
       <h2>Profile Overview</h2>
       {error ? (
-        <p style={{ color: "red" }}>Error: {error}</p> // Display error message
+        // Display error message in red
+        <p style={{ color: "red" }}>Error: {error}</p>
       ) : (
         <div className="stats-section">
           <div className="stat-item">
             <h3>Rank</h3>
-            <p>{stats.rank || "N/A"}</p>
+            <p>{stats.rank}</p>
           </div>
           <div className="stat-item">
             <h3>Questions Solved</h3>
-            <p>{stats.solvedQuestions || 0}</p>
+            <p>{stats.solvedQuestions}</p>
           </div>
           <div className="stat-item">
             <h3>Streak</h3>
-            <p>{stats.streak || 0} days</p>
+            <p>{stats.streak} days</p>
           </div>
           <div className="stat-item">
             <h3>Recent Activity</h3>

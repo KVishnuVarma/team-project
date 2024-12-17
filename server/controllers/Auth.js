@@ -40,7 +40,7 @@ const Login=async(req,res)=>{
         if (!ispasswordValid) {
             res.status(404).json({success:false,message:"Invalid credentials"})
         }
-                const token= jwt.sign({userId:user._id},process.env.JWT_SECRETE)
+                const token= jwt.sign({userId:user._id},process.env.JWT_SECRET)
 
                 res.cookie('token',token,{
                     httpOnly: true,

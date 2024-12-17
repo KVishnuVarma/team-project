@@ -4,9 +4,9 @@ const userStatsSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   rank: { type: String, required: true },
   solvedQuestions: { type: Number, default: 0 },
-  recentActivity: { type: Array, default: [] }, // e.g., ["Solved Problem X", "Attempted Problem Y"]
-  streak: { type: Number, default: 0 }, // Days of active participation
-  recentContests: { type: Array, default: [] }, // e.g., ["Contest 1", "Contest 2"]
+  recentActivity: { type: Array, default: [] },
+  streak: { type: Number, default: 0 },
+  recentContests: { type: Array, default: [] },
 });
 
 export default mongoose.model("UserStats", userStatsSchema);
