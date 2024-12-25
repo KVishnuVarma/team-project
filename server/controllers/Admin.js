@@ -4,7 +4,6 @@ const Getuser=async(req,res)=>{
     try {
         const users=await UserModel.find()
           res.status(200).json(users)
-          console.log("users" , users)
     } catch (error) {
         res.status(500).json({message:"intenral  server error"})
         console.log(error)

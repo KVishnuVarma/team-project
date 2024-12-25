@@ -11,6 +11,7 @@ import QuestionRoutes from './routes/Question.js';
 import AdminRoutes from './models/AdminRoutes.js'; // Fixed path
 import ContestRoutes from './routes/contestRoutes.js';
 import UserStats from './models/UserStats.js';
+import UserStatsRoutes from './routes/userStats.js';
 import jwt from "jsonwebtoken";
 import UserModel from './models/user.js';
 
@@ -55,30 +56,34 @@ app.use('/api/auth', AuthRoutes);
 app.use('/api/questions', QuestionRoutes);
 app.use('/api/admin', AdminRoutes);
 app.use('/api/contests', ContestRoutes);
+app.use('/api/stats', UserStatsRoutes);
 
 // Profile Retrieval API
-app.get("/api/stats/profile", async (req, res) => {
-  try {
-    const token = req.cookies?.token; // Check if token exists in cookies
-    if (!token) {
-      return res.status(403).json({ message: "No token provided" });
-    }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET); // Verify JWT token
+// app.get("/api/stats/profile", async (req, res) => {
+//   try {
+//     const token = req.cookies?.token; // Check if token exists in cookies
+//     if (!token) {
+//       return res.status(403).json({ message: "No token provided" });
+//     }
 
-    const stats = await UserStats.findOne({ userId: decoded.userId }); // Find user stats
-    if (!stats) {
-      return res.status(204).json({ message: "Stats not found for this user" });
-    }
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET); // Verify JWT token
 
-    res.status(200).json(stats); // Send stats
-  } catch (err) {
-    console.error("Error fetching profile stats:", err.message);
-    res.status(500).json({ message: "Error fetching stats", error: err.message });
-  }
-});
+//     const stats = await UserStats.findOne({ userId: decoded.userId }); // Find user stats
+//     if (!stats) {
+//       return res.status(204).json({ message: "Stats not found for this user" });
+//     }
+
+//     res.status(200).json(stats); // Send stats
+//   } catch (err) {
+//     console.error("Error fetching profile stats:", err.message);
+//     res.status(500).json({ message: "Error fetching stats", error: err.message });
+//   }
+// });
 
 // Find User Profile API
+
+
 app.get('/api/findProfile', async (req, res) => {
   try {
     const token = req.cookies?.token; // Read token from cookies

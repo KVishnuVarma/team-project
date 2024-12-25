@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import "./ProfileStats.css";
+import { useParams } from "react-router-dom";
 
 const ProfileStats = () => {
   const [stats, setStats] = useState({
@@ -9,76 +9,129 @@ const ProfileStats = () => {
     recentActivity: [],
     streak: 0,
     recentContests: [],
+    lastActiveDate: null,
   });
 
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [contests, setContests] = useState([]);
+
+  const { id } = useParams();
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        // Axios GET request with credentials
-        const response = await axios.get("http://localhost:5000/api/stats/profile", {
-          withCredentials: true, // Required to include cookies in the request
-        });
+        setLoading(true);
 
-        console.log("Fetched stats:", response.data); // Debugging log
-        setStats(response.data); // Update stats state
-        setError(null); // Reset any previous error
+        const response = await fetch(
+          `http://localhost:5000/api/stats/api/user/stats/${id}`,
+          {
+            method: "GET",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch stats. Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        const fetchedStats = {
+          rank: data.rank || "N/A",
+          solvedQuestions: data.solvedQuestions || 0,
+          recentActivity: data.recentActivity || [],
+          streak: data.streak || 0,
+          recentContests: data.recentContests || [],
+          lastActiveDate: data.lastActiveDate || null, // Fetching the last activity date
+        };
+
+        setStats(fetchedStats);
+
+        const contestResponse = await fetch("http://localhost:5000/api/contests");
+        const contestData = await contestResponse.json();
+        setContests(contestData);
       } catch (err) {
-        console.error(
-          "Error fetching stats:",
-          err.message || err.response?.statusText
-        ); // Log the error
-        setError(err.message || "Failed to fetch stats."); // Set error state
+        console.error("Error fetching stats:", err.message);
+        setError(err.message || "Something went wrong while fetching stats.");
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchStats(); // Call the fetch function
-  }, []);
+    fetchStats();
+  }, [id]);
+
+  const daysSinceLastActivity = stats.lastActiveDate
+    ? Math.ceil((new Date() - new Date(stats.lastActiveDate)) / (1000 * 3600 * 24))
+    : null;
 
   return (
-    <div className="profile-stats">
-      <h2>Profile Overview</h2>
-      {error ? (
-        // Display error message in red
-        <p style={{ color: "red" }}>Error: {error}</p>
+    <div className="profile-stats p-4 bg-white rounded shadow-md">
+      <h2 className="text-lg font-bold mb-4">Profile Overview</h2>
+
+      {loading ? (
+        <div className="loading-spinner">
+          <p>Loading...</p>
+        </div>
+      ) : error ? (
+        <p className="text-red-500">{error}</p>
       ) : (
         <div className="stats-section">
-          <div className="stat-item">
-            <h3>Rank</h3>
+          <div className="stat-item mb-4">
+            <h3 className="text-md font-bold">Rank</h3>
             <p>{stats.rank}</p>
           </div>
-          <div className="stat-item">
-            <h3>Questions Solved</h3>
+
+          <div className="stat-item mb-4">
+            <h3 className="text-md font-bold">Questions Solved</h3>
             <p>{stats.solvedQuestions}</p>
           </div>
-          <div className="stat-item">
-            <h3>Streak</h3>
+
+          <div className="stat-item mb-4">
+            <h3 className="text-md font-bold">Streak</h3>
             <p>{stats.streak} days</p>
           </div>
-          <div className="stat-item">
-            <h3>Recent Activity</h3>
-            <ul>
-              {stats.recentActivity.length > 0 ? (
-                stats.recentActivity.map((activity, index) => (
-                  <li key={index}>{activity}</li>
-                ))
-              ) : (
-                <li>No recent activity</li>
-              )}
-            </ul>
+
+          <div className="stat-item mb-4">
+            <h3 className="text-md font-bold">Last Active</h3>
+            {stats.lastActiveDate ? (
+              <p>{new Date(stats.lastActiveDate).toLocaleDateString()}</p>
+            ) : (
+              <p>No activity recorded.</p>
+            )}
+            {daysSinceLastActivity && daysSinceLastActivity >= 7 && (
+              <p className="text-red-500">You haven't participated for {daysSinceLastActivity} days. Please log in to keep your streak!</p>
+            )}
           </div>
-          <div className="stat-item">
-            <h3>Recent Contests</h3>
-            <ul>
-              {stats.recentContests.length > 0 ? (
-                stats.recentContests.map((contest, index) => (
-                  <li key={index}>{contest}</li>
-                ))
-              ) : (
-                <li>No recent contests</li>
-              )}
-            </ul>
+
+          <div className="stat-item mb-4">
+            <h3 className="text-md font-bold">Recent Activity</h3>
+            {stats.recentActivity.length > 0 ? (
+              <ul>
+                {stats.recentActivity.map((activity, index) => (
+                  <li key={index}>{activity}</li>
+                ))}
+              </ul>
+            ) : (
+              <p>No recent activity available.</p>
+            )}
+          </div>
+
+          <div className="stat-item mb-4">
+            <h3 className="text-md font-bold">Recent Contests</h3>
+            {contests.length > 0 ? (
+              <ul>
+                {contests.map((contest, index) => (
+                  <li key={index}>{contest.title}</li>
+                ))}
+              </ul>
+            ) : (
+              <p>No recent contests available.</p>
+            )}
           </div>
         </div>
       )}
