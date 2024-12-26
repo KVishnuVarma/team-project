@@ -46,7 +46,7 @@ const ProfileStats = () => {
           recentActivity: data.recentActivity || [],
           streak: data.streak || 0,
           recentContests: data.recentContests || [],
-          lastActiveDate: data.lastActiveDate || null, // Fetching the last activity date
+          lastActiveDate: data.lastActiveDate || null,
         };
 
         setStats(fetchedStats);

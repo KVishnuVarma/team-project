@@ -8,7 +8,7 @@ const ContestUpload = () => {
   const [startTime, setStartTime] = useState("");
   const [questions, setQuestions] = useState([
     { title: "", options: ["", "", "", ""], correctOption: 0 }
-  ]); // Updated to hold an array of objects for questions
+  ]);
   const [successMessage, setSuccessMessage] = useState("");
 
   const handleSubmit = async (e) => {

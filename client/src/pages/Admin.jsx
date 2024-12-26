@@ -3,7 +3,7 @@ import { FaFileUpload } from "react-icons/fa";
 import { PiStudent } from "react-icons/pi";
 import { IoHomeOutline } from "react-icons/io5";
 import { IoIosLogOut } from "react-icons/io";
-import { get, post } from '../services/Api'; // Assuming these are your API helper functions
+import { get, post } from '../services/Api';
 import './Admin.css';
 import ContestUpload from '../Admin/Contestupload';
 import ThirdYears from '../Admin/ThirdYear';
@@ -18,7 +18,6 @@ const Admin = () => {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState("");
 
-  // Fetch users and set the current date on component load
   useEffect(() => {
     const today = new Date();
     const formattedDate = `${today.getDate()}-${today.getMonth() + 1}-${today.getFullYear()}`;
@@ -36,23 +35,23 @@ const Admin = () => {
     fetchUsers();
   }, []);
 
-  // Handle test case changes
+
   const handleTestCaseChange = (index, field, value) => {
     const updatedTestCases = [...testCases];
     updatedTestCases[index][field] = value;
     setTestCases(updatedTestCases);
   };
 
-  // Add a new test case
+
   const handleAddTestCase = () => {
     setTestCases([...testCases, { input: "", expectedOutput: "" }]);
   };
 
-  // Submit the question
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate input
+
     if (!title || !description || testCases.some(tc => !tc.input || !tc.expectedOutput)) {
       alert("Please fill in all fields and test cases.");
       return;
@@ -63,7 +62,6 @@ const Admin = () => {
     try {
       const response = await post('/api/questions', questionData);
       alert('Question created successfully!');
-      // Reset fields
       setTitle("");
       setDescription("");
       setTestCases([{ input: "", expectedOutput: "" }]);
@@ -74,10 +72,9 @@ const Admin = () => {
     }
   };
 
-  // Handle logout
+
   const handleLogout = () => {
     setSelectedSection("logout");
-    // Add any logout logic if needed (e.g., clearing tokens)
   };
 
   return (
@@ -117,7 +114,6 @@ const Admin = () => {
           <div className="profile-pic"></div>
         </div>
 
-        {/* Render sections based on selected navigation */}
         {selectedSection === "thirdYears" ? (
           <ThirdYears />
         ) : selectedSection === "fourthYears" ? (
@@ -125,7 +121,7 @@ const Admin = () => {
         ) : selectedSection === "contestUpload" ? (
           <ContestUpload />
         ) : selectedSection === "logout" ? (
-          <p>You have logged out successfully.</p> // Replace with a Logout component if needed
+          <p>You have logged out successfully.</p>
         ) : (
           <div className="create-question-form">
             <h3>Create a New Question</h3>

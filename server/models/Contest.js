@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
 const QuestionSchema = new mongoose.Schema({
-  title: { type: String, required: true }, // The question text
-  description: { type: String }, // Optional field for additional details
-  options: { type: [String], required: true }, // Array of options
-  correctOption: { type: Number, required: true }, // Index of the correct option
+  title: { type: String, required: true },
+  description: { type: String },
+  options: { type: [String], required: true }, 
+  correctOption: { type: Number, required: true },
 });
 
 const ContestSchema = new mongoose.Schema({
@@ -24,7 +24,7 @@ const ContestSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  questions: [QuestionSchema], // Reference to the QuestionSchema
+  questions: [QuestionSchema],
   isActive: {
     type: Boolean,
     default: true,

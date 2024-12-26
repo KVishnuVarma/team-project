@@ -1,5 +1,3 @@
-
-/* General styles for ContestList component */
 .contest-list {
     max-width: 1200px;
     margin: 0 auto;
@@ -9,17 +7,16 @@
     color: #333;
 }
 
-/* Section heading styling */
 .contest-category-section h2 {
     text-align: center;
     font-size: 2rem;
     margin-bottom: 30px;
     color: #444;
     font-weight: bold;
-    margin-top: 40px; /* Adds spacing above sections */
+    margin-top: 40px;
 }
 
-/* Error message styling */
+
 .error-message {
     color: red;
     text-align: center;
@@ -27,72 +24,69 @@
     font-size: 1.2rem;
 }
 
-/* Container for contest cards */
+
 .contest-card-container {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
-    margin-bottom: 40px; /* Adds space below card groups */
+    margin-bottom: 40px;
 }
 
-/* Individual contest card styling */
+
 .contest-card {
-    background-color: #7eb6eb; /* Default color */
+    background-color: #7eb6eb;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 300px;
-    height: 220px; /* Fixed height */
+    height: 220px;
     overflow: hidden;
     position: relative;
     cursor: pointer;
     display: flex;
-    align-items: flex-end; /* Align content at the bottom */
-    animation: slideIn 0.8s ease-in-out; /* Add animation */
+    align-items: flex-end;
+    animation: slideIn 0.8s ease-in-out;
     transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
-/* Add different colors for categories */
+
 .contest-card:nth-child(3n+1) {
-    background-color: #FADADD; /* Soft red */
+    background-color: #FADADD;
 }
 
 .contest-card:nth-child(3n+2) {
-    background-color: #FFFACD; /* Soft yellow */
+    background-color: #FFFACD;
 }
 
 .contest-card:nth-child(3n) {
-    background-color: #E0FFFF; /* Soft blue */
+    background-color: #E0FFFF;
 }
 
-/* Hover effect */
 .contest-card:hover {
-    transform: scale(1.05); /* Slight zoom on hover */
+    transform: scale(1.05);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-/* Card content styling */
+
 .card-content {
     width: 100%;
-    height: auto; /* Auto height for flexible content */
-    max-height: 100%; /* Ensure it does not exceed card height */
-    overflow-y: auto; /* Add scroll for overflowing content */
+    height: auto;
+    max-height: 100%;
+    overflow-y: auto;
     position: absolute;
-    bottom: -100%; /* Initially hidden outside the bottom of the card */
+    bottom: -100%;
     background: linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* Align content at the top after animation */
+    justify-content: flex-start;
     padding: 15px;
-    transition: bottom 0.6s ease-in-out; /* Smooth scroll effect */
+    transition: bottom 0.6s ease-in-out;
 }
 
-/* Slide content up when hovering */
 .contest-card:hover .card-content {
-    bottom: 0; /* Fully visible content */
+    bottom: 0;
 }
 
-/* Title styling */
 .contest-title {
     font-size: 1.6rem;
     color: #004080;
@@ -102,24 +96,21 @@
     text-transform: uppercase;
 }
 
-/* Description styling */
 .contest-description {
     font-size: 1rem;
     color: #333;
     margin-bottom: 15px;
     line-height: 1.5;
-    overflow-wrap: break-word; /* Ensure long text wraps properly */
+    overflow-wrap: break-word;
 }
 
-/* Timing information styling */
 .contest-timing {
     font-size: 0.9rem;
     color: #555;
-    margin-top: auto; /* Pushes the timing to the bottom */
+    margin-top: auto;
     font-style: italic;
 }
 
-/* Message for no contests */
 .no-contests {
     text-align: center;
     font-size: 1.2rem;
@@ -127,22 +118,20 @@
     margin-top: 40px;
 }
 
-/* Keyframe animation for sliding in cards */
 @keyframes slideIn {
     from {
         opacity: 0;
-        transform: translateY(20px); /* Start slightly below */
+        transform: translateY(20px);
     }
     to {
         opacity: 1;
-        transform: translateY(0); /* End at the original position */
+        transform: translateY(0);
     }
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
     .contest-card {
-        width: 90%; /* Cards take full width on smaller screens */
+        width: 90%;
     }
 
     .contest-title {

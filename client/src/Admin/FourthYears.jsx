@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate here
+import { useNavigate } from 'react-router-dom';
 import './thirdYear.css'; 
 import { IoMdContact } from "react-icons/io";
 
 const FourthYears = () => {
   const [data, setData] = useState([]);
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
-  // Fetch users from the API
+
   const getUser = async () => {
     try {
       const response = await fetch("http://localhost:5000/api/admin/getuser");
@@ -21,7 +21,7 @@ const FourthYears = () => {
     }
   };
 
-  // Navigate to user's profile stats page
+
   const handleExplore = (userId) => {
     navigate(`/user/profileStats/${userId}`);
   };
@@ -51,7 +51,7 @@ const FourthYears = () => {
             </li>
           ))
         ) : (
-          <li>No students found</li> // Fallback if no data
+          <li>No students found</li>
         )}
       </ul>
     </div>

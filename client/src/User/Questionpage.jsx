@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Questionpage.css";
 import { useParams } from "react-router-dom";
-import CircularProgress from "@mui/material/CircularProgress"; // Material-UI for circular progress
+import CircularProgress from "@mui/material/CircularProgress";
 
 const QuestionsPage = () => {
   const { contestId } = useParams();
@@ -142,10 +142,10 @@ const QuestionsPage = () => {
           <div className="circular-progress-container">
             <CircularProgress
               variant="determinate"
-              value={accuracy} // The accuracy percentage value
-              size={120} // Adjust size as needed
-              thickness={5} // Adjust thickness as needed
-              style={{ color: "#007bff" }} // Circle color
+              value={accuracy}
+              size={120}
+              thickness={5}
+              style={{ color: "#007bff" }}
             />
             <div className="accuracy-text">
               {accuracy}% Accuracy

@@ -7,7 +7,7 @@ const ThirdYears = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
 
-  // Fetch users from the API
+
   const getUser = async () => {
     try {
       const response = await fetch("http://localhost:5000/api/admin/getuser");
@@ -21,7 +21,7 @@ const ThirdYears = () => {
     }
   };
 
-  // Navigate to user's profile stats page
+
   const handleExplore = (userId) => {
     navigate(`/user/profileStats/${userId}`);
   };
@@ -36,7 +36,7 @@ const ThirdYears = () => {
       <ul>
         {data.length > 0 ? (
           data.map((student) => (
-            <li key={student._id}> {/* Use unique keys */}
+            <li key={student._id}>
               <span className="student-profile">
                 <IoMdContact className="contacticon" />
                 <span className="student-name">{student.name}</span>
@@ -51,7 +51,7 @@ const ThirdYears = () => {
             </li>
           ))
         ) : (
-          <li>No students found</li> // Fallback if no data
+          <li>No students found</li>
         )}
       </ul>
     </div>

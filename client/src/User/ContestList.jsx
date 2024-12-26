@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
-import "./ContestList.css"; // Import the CSS file for styling
+import { Link } from "react-router-dom";
+import "./ContestList.css";
 
 const ContestList = () => {
   const [contests, setContests] = useState([]);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true); // New loading state
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchContests() {
       try {
         const response = await fetch("http://localhost:5000/api/contests");
+        console.log()
         if (!response.ok) {
           throw new Error("Failed to fetch contests");
         }
@@ -19,7 +20,7 @@ const ContestList = () => {
       } catch (err) {
         setError(err.message);
       } finally {
-        setLoading(false); // Set loading to false once the request completes
+        setLoading(false);
       }
     }
 
@@ -27,14 +28,13 @@ const ContestList = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading contests...</div>; // Display loading text while fetching data
+    return <div>Loading contests...</div>;
   }
 
   if (error) {
     return <div className="error-message">Error: {error}</div>;
   }
 
-  // Group contests by category
   const biweeklyContests = contests.filter(
     (contest) => contest.category === "Biweekly"
   );
@@ -47,7 +47,6 @@ const ContestList = () => {
 
   return (
     <div>
-      {/* Biweekly Battles Section */}
       {biweeklyContests.length > 0 && (
         <div className="contest-category-section">
           <h2>Biweekly Battles</h2>
@@ -55,7 +54,7 @@ const ContestList = () => {
             {biweeklyContests.map((contest) => (
               <Link
                 key={contest._id}
-                to={`/user/contests/${contest._id}/questions`} // Link to contest's question page
+                to={`/user/contests/${contest._id}/questions`}
                 className="contest-card"
               >
                 <div className="card-content">
@@ -71,7 +70,6 @@ const ContestList = () => {
         </div>
       )}
 
-      {/* Monthly Masters Section */}
       {monthlyContests.length > 0 && (
         <div className="contest-category-section">
           <h2>Monthly Masters</h2>
@@ -79,7 +77,7 @@ const ContestList = () => {
             {monthlyContests.map((contest) => (
               <Link
                 key={contest._id}
-                to={`/user/contests/${contest._id}/questions`} // Link to contest's question page
+                to={`/user/contests/${contest._id}/questions`}
                 className="contest-card"
               >
                 <div className="card-content">
@@ -95,7 +93,6 @@ const ContestList = () => {
         </div>
       )}
 
-      {/* Daily Contests Section */}
       {dailyContests.length > 0 && (
         <div className="contest-category-section">
           <h2>Daily Contests</h2>
@@ -103,7 +100,7 @@ const ContestList = () => {
             {dailyContests.map((contest) => (
               <Link
                 key={contest._id}
-                to={`/user/contests/${contest._id}/questions`} // Link to contest's question page
+                to={`/user/contests/${contest._id}/questions`}
                 className="contest-card"
               >
                 <div className="card-content">
@@ -119,7 +116,6 @@ const ContestList = () => {
         </div>
       )}
 
-      {/* Message when no contests */}
       {biweeklyContests.length === 0 &&
         monthlyContests.length === 0 &&
         dailyContests.length === 0 && (

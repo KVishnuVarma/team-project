@@ -1,10 +1,9 @@
 import express from "express";
 import Contest from "../models/Contest.js";
-import mongoose from "mongoose";  // Import mongoose to validate ObjectId
+import mongoose from "mongoose";
 
 const router = express.Router();
 
-// Add a new contest (POST)
 router.post("/add", async (req, res) => {
   const { title, startTime, description, category, questions } = req.body;
 
@@ -27,28 +26,25 @@ router.post("/add", async (req, res) => {
 
   try {
     await contest.save();
-    res.status(201).json(contest);  // Return the entire contest object after creation
+    res.status(201).json(contest);
   } catch (error) {
     res.status(400).json({ message: "Failed to create contest", error });
   }
 });
 
-// Get all contests (GET)
 router.get("/", async (req, res) => {
   try {
     const contests = await Contest.find();
-    res.json(contests);  // Return the list of contests
+    res.json(contests);
   } catch (error) {
     res.status(500).json({ message: "Failed to retrieve contests", error });
   }
 });
 
-// Get questions for a specific contest (GET)
 router.get("/:id/questions", async (req, res) => {
   const { id } = req.params;
 
   try {
-    // Validate the contest ID
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ message: "Invalid contest ID format" });
     }
@@ -59,13 +55,12 @@ router.get("/:id/questions", async (req, res) => {
       return res.status(404).json({ message: "Contest not found" });
     }
 
-    res.json({ questions: contest.questions });  // Return the questions array
+    res.json({ questions: contest.questions });
   } catch (error) {
     res.status(500).json({ message: "Failed to retrieve questions", error });
   }
 });
 
-// Add questions to an existing contest (PATCH)
 router.patch("/:id/add-questions", async (req, res) => {
   const { id } = req.params;
   const { questions } = req.body;
@@ -75,7 +70,6 @@ router.patch("/:id/add-questions", async (req, res) => {
   }
 
   try {
-    // Validate the contest ID
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ message: "Invalid contest ID format" });
     }
@@ -86,22 +80,19 @@ router.patch("/:id/add-questions", async (req, res) => {
       return res.status(404).json({ message: "Contest not found" });
     }
 
-    // Add new questions to the existing questions array
     contest.questions.push(...questions);
 
     await contest.save();
-    res.json(contest);  // Return the updated contest object
+    res.json(contest);
   } catch (error) {
     res.status(400).json({ message: "Failed to add questions", error });
   }
 });
 
-// Get a specific contest by ID (GET)
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    // Validate the contest ID
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ message: "Invalid contest ID format" });
     }
@@ -112,7 +103,7 @@ router.get("/:id", async (req, res) => {
       return res.status(404).json({ message: "Contest not found" });
     }
 
-    res.json(contest);  // Return the contest object
+    res.json(contest);
   } catch (error) {
     res.status(500).json({ message: "Failed to retrieve contest", error });
   }

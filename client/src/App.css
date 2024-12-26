@@ -178,7 +178,7 @@ button {
 button:hover {
   background-color: #c82333;
 }
-/* Existing CSS */
+
 .home-container {
 display: flex;
 justify-content: center;

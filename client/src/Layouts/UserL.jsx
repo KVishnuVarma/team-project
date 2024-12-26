@@ -22,7 +22,7 @@ const UserL = () => {
       <div className="sidebar">
         <ul>
           <li className="sidebar-item">
-              <img src="/logo.jpeg" className="icon" alt="Free Code Logo" />
+              <img src="/logo.png" className="icon" alt="Free Code Logo" />
               <div className="label">Free Code</div>
           </li>
 
@@ -32,14 +32,6 @@ const UserL = () => {
               <div className="label">Profile</div>
             </Link>
           </li>
-{/* 
-          <li className="sidebar-item">
-            <Link to="/user/test">
-              <FaFileUpload className='icon' />
-              <div className="label">Test</div>
-            </Link>
-          </li> */}
-
           <li className="sidebar-item">
             <Link to="/user/practice">
               <PiStudent className='icon' />

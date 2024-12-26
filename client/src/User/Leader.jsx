@@ -7,7 +7,6 @@ const Leader = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
 
-  // Fetch users from the API
   const getUser = async () => {
     try {
       const response = await fetch("http://localhost:5000/api/admin/getuser");
@@ -18,7 +17,7 @@ const Leader = () => {
     }
   };
 
-  // Navigate to the user's recent page
+
   const handleExplore = (userId) => {
     navigate(`/user/profileStats/${userId}`);
 
