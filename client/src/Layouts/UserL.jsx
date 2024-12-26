@@ -9,9 +9,7 @@ import '../pages/User.css';
 const UserL = () => {
   const navigate = useNavigate();
 
-  
   const handleLogout = () => {
-    
     localStorage.removeItem("userToken");
     sessionStorage.clear();
     navigate('/');
@@ -22,40 +20,49 @@ const UserL = () => {
       <div className="sidebar">
         <ul>
           <li className="sidebar-item">
-              <img src="/logo.png" className="icon" alt="Free Code Logo" />
+            <div className='label-l'>
+              <img src="/logo.png" className="icon-i" alt="Free Code Logo" />
               <div className="label">Free Code</div>
+            </div>
           </li>
 
           <li className="sidebar-item">
             <Link to="/user/profile">
-              <PiStudent className='icon' />
-              <div className="label">Profile</div>
+              <div className='label-l'>
+                <PiStudent className='icon-l' />
+                <div className="label">Profile</div>
+              </div>
             </Link>
           </li>
           <li className="sidebar-item">
             <Link to="/user/practice">
-              <PiStudent className='icon' />
-              <div className="label">Practice</div>
+              <div className='label-l'>
+                <PiStudent className='icon-l' />
+                <div className="label">Practice</div>
+              </div>
             </Link>
           </li>
 
           <li className="sidebar-item">
             <Link to="/user/contests">
-              <FaFileUpload className='icon' />
-              <div className='label'>Contest</div>
+              <div className='label-l'>
+                <FaFileUpload className='icon-l' />
+                <div className='label'>Contest</div>
+              </div>
             </Link>
-
           </li>
 
           <li className="sidebar-item">
             <Link to="/user/leaderboard">
-              <MdLeaderboard className='icon l' />
-              <div className="label">Leaderboard</div>
+              <div className='label-l'>
+                <MdLeaderboard className='icon-l' />
+                <div className="label">Leaderboard</div>
+              </div>
             </Link>
           </li>
 
           <li className="sidebar-item" onClick={handleLogout}>
-            <IoIosLogOut className='icon' />
+            <IoIosLogOut className='icon-l' />
             <div className="label">Logout</div>
           </li>
         </ul>

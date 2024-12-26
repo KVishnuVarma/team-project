@@ -39,7 +39,7 @@ const Practice = () => {
             <div key={question._id} className="question-box">
               <div className="question-details">
                 <h3 className="question-title">{question.title}</h3>
-                <p className="question-description">{question.description}</p>
+                {/* <p className="question-description">{question.description}</p> */}
                 <p className="question-date">
                   Created At: {new Date(question.createdAt).toLocaleDateString()}
                 </p>

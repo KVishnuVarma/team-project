@@ -37,7 +37,7 @@ const Leader = () => {
               <IoMdContact className="contacticon" />
               <span className="student-name">{student.name}</span>
             </span>
-            <span className="student-points">{student.points} Points</span>
+            <span className="student-points">{student.points} 0 </span>
             <button
               className="explore-btn"
               onClick={() => handleExplore(student._id)}

@@ -155,7 +155,7 @@ const ContestUpload = () => {
               <button
                 type="button"
                 onClick={() => removeQuestionField(index)}
-                style={{ marginLeft: "10px", color: "red" }}
+                style={{ marginLeft: "1px", color: "red" }}
               >
                 Remove Question
               </button>

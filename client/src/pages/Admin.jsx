@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { FaFileUpload } from "react-icons/fa";
 import { PiStudent } from "react-icons/pi";
 import { IoHomeOutline } from "react-icons/io5";
 import { IoIosLogOut } from "react-icons/io";
-import { get, post } from '../services/Api';
-import './Admin.css';
-import ContestUpload from '../Admin/Contestupload';
-import ThirdYears from '../Admin/ThirdYear';
-import FourthYears from '../Admin/FourthYears';
+import { get, post } from "../services/Api";
+import "./Admin.css";
+import ContestUpload from "../Admin/Contestupload";
+import ThirdYears from "../Admin/ThirdYear";
+import FourthYears from "../Admin/FourthYears";
 
 const Admin = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [testCases, setTestCases] = useState([{ input: "", expectedOutput: "" }]);
+  const [testCases, setTestCases] = useState([
+    { input: "", expectedOutput: "" },
+  ]);
   const [currentDate, setCurrentDate] = useState("");
   const [selectedSection, setSelectedSection] = useState("createQuestion");
   const [users, setUsers] = useState([]);
@@ -20,12 +22,14 @@ const Admin = () => {
 
   useEffect(() => {
     const today = new Date();
-    const formattedDate = `${today.getDate()}-${today.getMonth() + 1}-${today.getFullYear()}`;
+    const formattedDate = `${today.getDate()}-${
+      today.getMonth() + 1
+    }-${today.getFullYear()}`;
     setCurrentDate(formattedDate);
 
     const fetchUsers = async () => {
       try {
-        const response = await get('/api/admin/getuser');
+        const response = await get("/api/admin/getuser");
         setUsers(response.data);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -35,24 +39,24 @@ const Admin = () => {
     fetchUsers();
   }, []);
 
-
   const handleTestCaseChange = (index, field, value) => {
     const updatedTestCases = [...testCases];
     updatedTestCases[index][field] = value;
     setTestCases(updatedTestCases);
   };
 
-
   const handleAddTestCase = () => {
     setTestCases([...testCases, { input: "", expectedOutput: "" }]);
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-
-    if (!title || !description || testCases.some(tc => !tc.input || !tc.expectedOutput)) {
+    if (
+      !title ||
+      !description ||
+      testCases.some((tc) => !tc.input || !tc.expectedOutput)
+    ) {
       alert("Please fill in all fields and test cases.");
       return;
     }
@@ -60,18 +64,20 @@ const Admin = () => {
     const questionData = { title, description, testCases };
 
     try {
-      const response = await post('/api/questions', questionData);
-      alert('Question created successfully!');
+      const response = await post("/api/questions", questionData);
+      alert("Question created successfully!");
       setTitle("");
       setDescription("");
       setTestCases([{ input: "", expectedOutput: "" }]);
       setError("");
     } catch (error) {
       console.error("Error creating question:", error);
-      setError("Error creating question: " + (error.response?.data?.error || error.message));
+      setError(
+        "Error creating question: " +
+          (error.response?.data?.error || error.message)
+      );
     }
   };
-
 
   const handleLogout = () => {
     setSelectedSection("logout");
@@ -82,36 +88,51 @@ const Admin = () => {
       <div className="sidebar">
         <ul>
           <li>
-            <img src="/logo.jpeg" className="icon" alt="Free Code Logo" />
+            <img src="/logo.png" className="icon" alt="Free Code Logo" />
             <h2 className="label">Free Code</h2>
           </li>
           <li onClick={() => setSelectedSection("home")}>
-            <IoHomeOutline className='icon' />
-            <div className="label">Home Page</div>
+            <div className="label-l">
+              <IoHomeOutline className="icon" />
+              <div className="label">Home Page</div>
+            </div>
           </li>
           <li onClick={() => setSelectedSection("thirdYears")}>
-            <PiStudent className='icon' />
-            <div className="label">3rd Years</div>
+            <div className="label-l">
+              <PiStudent className="icon" />
+              <div className="label">3rd Years</div>
+            </div>
           </li>
           <li onClick={() => setSelectedSection("fourthYears")}>
-            <PiStudent className='icon' />
-            <div className="label">4th Years</div>
+            <div className="label-l">
+              <PiStudent className="icon" />
+              <div className="label">4th Years</div>
+            </div>
           </li>
           <li onClick={() => setSelectedSection("contestUpload")}>
-            <FaFileUpload className='icon' />
-            <div className="label">Upload Contest</div>
+            <div className="label-l">
+              <FaFileUpload className="icon" />
+              <div className="label">Upload Contest</div>
+            </div>
           </li>
           <li onClick={handleLogout}>
-            <IoIosLogOut className='icon' />
-            <div className="label">Logout</div>
+            <div className="label-l">
+              <IoIosLogOut className="icon" />
+              <div className="label">Logout</div>
+            </div>
           </li>
         </ul>
       </div>
       <div className="content">
         <div className="header-left">
-          <h3 className='admin'>Welcome Admin</h3>
+          <h3 className="admin">Welcome Admin</h3>
           <p>{currentDate}</p>
-          <div className="profile-pic"></div>
+          <div className="profile-pic">
+            <img
+              className="profile-pic-img"
+              src="https://static.vecteezy.com/system/resources/thumbnails/002/002/403/small/man-with-beard-avatar-character-isolated-icon-free-vector.jpg"
+            ></img>
+          </div>
         </div>
 
         {selectedSection === "thirdYears" ? (
@@ -154,14 +175,22 @@ const Admin = () => {
                       type="text"
                       placeholder="Input"
                       value={testCase.input}
-                      onChange={(e) => handleTestCaseChange(index, 'input', e.target.value)}
+                      onChange={(e) =>
+                        handleTestCaseChange(index, "input", e.target.value)
+                      }
                       required
                     />
                     <input
                       type="text"
                       placeholder="Expected Output"
                       value={testCase.expectedOutput}
-                      onChange={(e) => handleTestCaseChange(index, 'expectedOutput', e.target.value)}
+                      onChange={(e) =>
+                        handleTestCaseChange(
+                          index,
+                          "expectedOutput",
+                          e.target.value
+                        )
+                      }
                       required
                     />
                   </div>
